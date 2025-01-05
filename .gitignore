@@ -1,0 +1,10 @@
+#ide
+.idea
+.vscode
+.chrome
+
+# dependencies
+/node_modules
+
+# production
+/dist
