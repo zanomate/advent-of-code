@@ -1,16 +1,19 @@
-import { red } from './utils/print'
+import { printSolution, red } from './utils/print'
+import { DaySolution } from './utils/type'
 
-const year = 2024
-const day = 1
+export const resolveDay = async (year: number, day: number, inputFile: string): Promise<DaySolution> => {
+  const solution = await import(`./${year}/day${day}`)
+  return solution.default(`./src/${year}/day${day}/${inputFile}.txt`)
+}
 
-;(async () => {
+export const resolve = async () => {
   try {
-    const solution = await import(`./${year}/day${day}`)
-    await solution.default()
+    const solution = await resolveDay(2024, 25, 'input')
+    printSolution(solution)
   } catch (error) {
     if (error instanceof Error) {
       console.error(red(error.message))
       // console.error(error.stack)
     } else throw error
   }
-})()
+}

@@ -1,4 +1,5 @@
 import { readFile } from '../../utils/io'
+import { DaySolution } from '../../utils/type'
 
 type Pad = 'num' | 'dir'
 type NumKey = '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '0' | 'A'
@@ -82,29 +83,27 @@ const getPathLength = (code: string, pads: Pad[]): number => {
   return tot
 }
 
-export default async function () {
-  const input = await readFile('./src/2024/day21/input.txt').then((text) => text.trim())
+export default async function (inputFile: string): Promise<DaySolution> {
+  const input = await readFile(inputFile).then((text) => text.trim())
   const codes = input.split('\n')
 
   const t0 = performance.now()
 
-  const pads1: Pad[] = ['num', 'dir', 'dir']
+  const pads1: Pad[] = ['num', 'dir', 'dir', 'dir']
   const pads2 = ['num', ...Array(25).fill('dir'), 'dir']
 
-  let complexity1 = 0
-  let complexity2 = 0
+  let part1 = 0
+  let part2 = 0
 
   codes.forEach((code) => {
     let length1 = getPathLength(code, pads1)
     let length2 = getPathLength(code, pads2)
     const value = parseInt(code.match(/(\d+)A/)![1])
-    complexity1 += length1 * value
-    complexity2 += length2 * value
+    part1 += length1 * value
+    part2 += length2 * value
   })
 
   const t1 = performance.now()
 
-  console.log('Part 1:', complexity1)
-  console.log('Part 2:', complexity2)
-  console.log('Time (ms)', t1 - t0)
+  return [part1, part2, t1 - t0]
 }

@@ -2,6 +2,7 @@ import { readFile } from '../../utils/io'
 import { CARDINAL_DIRECTIONS } from '../../utils/space/Dir'
 import { Grid } from '../../utils/space/Grid'
 import { Pos } from '../../utils/space/Pos'
+import { DaySolution } from '../../utils/type'
 
 enum Cell {
   EMPTY = '.',
@@ -13,8 +14,8 @@ enum Cell {
 const WIDTH = 71
 const HEIGHT = 71
 
-export default async function () {
-  const input = await readFile('./src/2024/day18/input.txt').then((text) => text.trim())
+export default async function (inputFile: string): Promise<DaySolution> {
+  const input = await readFile(inputFile).then((text) => text.trim())
   const obstacles = input.split('\n').map((row) => {
     const [x, y] = row.split(',').map((str) => parseInt(str))
     return new Pos(x, y)
@@ -62,7 +63,5 @@ export default async function () {
 
   const t1 = performance.now()
 
-  console.log('Part 1:', part1)
-  console.log('Part 2:', part2)
-  console.log('Time (ms):', t1 - t0)
+  return [part1, part2, t1 - t0]
 }

@@ -2,6 +2,7 @@ import { readFile } from '../../utils/io'
 import { Dir } from '../../utils/space/Dir'
 import { Grid } from '../../utils/space/Grid'
 import { Pos } from '../../utils/space/Pos'
+import { DaySolution } from '../../utils/type'
 
 export class Field {
   readonly grid: Grid<number>
@@ -27,27 +28,25 @@ export class Field {
   }
 }
 
-export default async function () {
-  const input = await readFile('./src/2024/day10/input.txt').then((text) => text.trim())
+export default async function (inputFile: string): Promise<DaySolution> {
+  const input = await readFile(inputFile).then((text) => text.trim())
   const cells: number[][] = input.split('\n').map((row) => row.split('').map((num) => parseInt(num)))
   const field = new Field(cells)
 
   const t0 = performance.now()
 
-  let res1 = 0
-  let res2 = 0
+  let part1 = 0
+  let part2 = 0
   field.forEachCell((pos, value) => {
     if (value === 0) {
       const trailEnds = field.getTrailheadEnds(pos)
       const uniqueTrailEnds = Array.from(new Set(trailEnds.map((pos) => pos.toString())))
-      res1 += uniqueTrailEnds.length
-      res2 += trailEnds.length
+      part1 += uniqueTrailEnds.length
+      part2 += trailEnds.length
     }
   })
 
   const t1 = performance.now()
 
-  console.log('Part 1:', res1)
-  console.log('Part 2:', res2)
-  console.log('Time (ms):', t1 - t0)
+  return [part1, part2, t1 - t0]
 }

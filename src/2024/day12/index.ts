@@ -2,6 +2,7 @@ import { readFile } from '../../utils/io'
 import { CARDINAL_DIRECTIONS, Dir } from '../../utils/space/Dir'
 import { Grid } from '../../utils/space/Grid'
 import { Pos } from '../../utils/space/Pos'
+import { DaySolution } from '../../utils/type'
 
 export enum SideType {
   UNKNOWN = '?',
@@ -107,8 +108,8 @@ export class Field {
   }
 }
 
-export default async function () {
-  const input = await readFile('./src/2024/day12/input.txt').then((text) => text.trim())
+export default async function (inputFile: string): Promise<DaySolution> {
+  const input = await readFile(inputFile).then((text) => text.trim())
   const cells: string[][] = input.split('\n').map((row) => row.split(''))
   const field = new Field(cells)
 
@@ -124,8 +125,8 @@ export default async function () {
     }
   }
   field.unvisit()
-  let tot1 = 0
-  let tot2 = 0
+  let part1 = 0
+  let part2 = 0
   regions.forEach((region) => {
     const firstCell = region[0]
     const area = region.length
@@ -134,13 +135,11 @@ export default async function () {
       return tot + sides
     }, 0)
     const sides = field.getSides(firstCell.pos)
-    tot1 += area * perimeter
-    tot2 += area * sides
+    part1 += area * perimeter
+    part2 += area * sides
   })
 
   const t1 = performance.now()
 
-  console.log('Part 1:', tot1)
-  console.log('Part 2:', tot2)
-  console.log('Time (ms):', t1 - t0)
+  return [part1, part2, t1 - t0]
 }

@@ -3,6 +3,7 @@ import { readFile } from '../../utils/io'
 import { Dir, turnRight } from '../../utils/space/Dir'
 import { Grid } from '../../utils/space/Grid'
 import { Pos } from '../../utils/space/Pos'
+import { DaySolution } from '../../utils/type'
 
 export enum Cell {
   EMPTY = '.',
@@ -56,8 +57,8 @@ export class Field {
   }
 }
 
-export default async function () {
-  const input = await readFile('./src/2024/day6/input.txt').then((text) => text.trim())
+export default async function (inputFile: string): Promise<DaySolution> {
+  const input = await readFile(inputFile).then((text) => text.trim())
   const cells: (Cell | Dir)[][] = input.split('\n').map((row) => row.split('')) as (Cell | Dir)[][]
 
   const t0 = performance.now()
@@ -86,9 +87,10 @@ export default async function () {
     await field.moveGuard()
   }
 
+  const part1 = visited.size
+  const part2 = obstructions.size
+
   const t1 = performance.now()
 
-  console.log('Part 1:', visited.size)
-  console.log('Part 2:', obstructions.size)
-  console.log('Time (ms):', t1 - t0)
+  return [part1, part2, t1 - t0]
 }

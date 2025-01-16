@@ -1,4 +1,5 @@
 import { readFile } from '../../utils/io'
+import { DaySolution } from '../../utils/type'
 
 function computeDistance(leftNums: number[], rightNums: number[]): number {
   let tot = 0
@@ -16,8 +17,8 @@ function computeSimilarity(leftNums: number[], rightNums: number[]): number {
   return tot
 }
 
-export default async function () {
-  const input = await readFile('./src/2024/day1/input.txt').then((text) => text.trim())
+export default async function (inputFile: string): Promise<DaySolution> {
+  const input = await readFile(inputFile).then((text) => text.trim())
   const leftNums: number[] = []
   const rightNums: number[] = []
   input.split('\n').forEach((line) => {
@@ -35,7 +36,5 @@ export default async function () {
 
   const t1 = performance.now()
 
-  console.log('Part 1:', part1)
-  console.log('Part 2:', part2)
-  console.log('Time (ms):', t1 - t0)
+  return [part1, part2, t1 - t0]
 }

@@ -1,4 +1,5 @@
 import { readFile } from '../../utils/io'
+import { DaySolution } from '../../utils/type'
 
 function isListSafe(levels: number[]) {
   let asc: boolean | null = null
@@ -13,8 +14,8 @@ function isListSafe(levels: number[]) {
   })
 }
 
-export default async function () {
-  const input = await readFile('./src/2024/day2/input.txt').then((text) => text.trim())
+export default async function (inputFile: string): Promise<DaySolution> {
+  const input = await readFile(inputFile).then((text) => text.trim())
   const reports: number[][] = input.split('\n').map((line) => line.split(' ').map((str) => parseInt(str)))
 
   const t0 = performance.now()
@@ -33,7 +34,5 @@ export default async function () {
 
   const t1 = performance.now()
 
-  console.log('Part 1:', part1)
-  console.log('Part 2:', part2)
-  console.log('Time (ms):', t1 - t0)
+  return [part1, part2, t1 - t0]
 }

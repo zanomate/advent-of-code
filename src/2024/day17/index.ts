@@ -1,6 +1,7 @@
 import { Big } from 'big.js'
 import isEqual from 'lodash/isEqual'
 import { readFile } from '../../utils/io'
+import { DaySolution } from '../../utils/type'
 
 const bits = (num: number): string => {
   if (num === 0) return '000'
@@ -188,8 +189,8 @@ export class Memory {
   // }
 }
 
-export default async function () {
-  const input = await readFile('./src/2024/day17/input.txt').then((text) => text.trim())
+export default async function (inputFile: string): Promise<DaySolution> {
+  const input = await readFile(inputFile).then((text) => text.trim())
   const [registersInput, programInput] = input.split('\n\n')
   const registers = registersInput.split('\n')
   const matchA = registers[0].match(/Register A: (\d+)/)
@@ -233,7 +234,5 @@ export default async function () {
 
   const t1 = performance.now()
 
-  console.log('Part 1:', part1)
-  console.log('Part 2:', part2)
-  console.log('Time (ms):', t1 - t0)
+  return [part1, part2, t1 - t0]
 }

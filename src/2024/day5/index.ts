@@ -1,9 +1,10 @@
 import { readFile } from '../../utils/io'
+import { DaySolution } from '../../utils/type'
 import { Rule } from './model/Rule'
 import { Update } from './model/Update'
 
-export default async function () {
-  const input = await readFile('./src/2024/day5/input.txt').then((text) => text.trim())
+export default async function (inputFile: string): Promise<DaySolution> {
+  const input = await readFile(inputFile).then((text) => text.trim())
   const [rulesInput, updatesInput] = input.trim().split('\n\n')
   const rules = rulesInput.split('\n').map((str) => new Rule(str))
   const updates = updatesInput.split('\n').map((str) => new Update(str.split(',').map((num) => parseInt(num))))
@@ -18,7 +19,5 @@ export default async function () {
 
   const t1 = performance.now()
 
-  console.log('Part 1:', part1)
-  console.log('Part 2:', part2)
-  console.log('Time (ms):', t1 - t0)
+  return [part1, part2, t1 - t0]
 }

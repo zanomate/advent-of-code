@@ -2,14 +2,15 @@ import { readFile } from '../../utils/io'
 import { getCombinations } from '../../utils/math'
 import { Grid } from '../../utils/space/Grid'
 import { Pos } from '../../utils/space/Pos'
+import { DaySolution } from '../../utils/type'
 
 export enum Cell {
   EMPTY = '.',
   ANTINODE = '#',
 }
 
-export default async function () {
-  const input = await readFile('./src/2024/day8/input.txt').then((text) => text.trim())
+export default async function (inputFile: string): Promise<DaySolution> {
+  const input = await readFile(inputFile).then((text) => text.trim())
   const cells = input.split('\n').map((line) => line.split('')) as Cell[][]
 
   const t0 = performance.now()
@@ -50,6 +51,9 @@ export default async function () {
     })
   })
 
+  const part1 = antinodes1.size
+  const part2 = antinodes2.size
+
   antinodes1.forEach((an) => {
     const [x, y] = an.split(',').map((str) => parseInt(str))
     grid.setCell(new Pos(x, y), Cell.ANTINODE)
@@ -57,7 +61,5 @@ export default async function () {
 
   const t1 = performance.now()
 
-  console.log('Part 1:', antinodes1.size)
-  console.log('Part 2:', antinodes2.size)
-  console.log('Time (ms):', t1 - t0)
+  return [part1, part2, t1 - t0]
 }

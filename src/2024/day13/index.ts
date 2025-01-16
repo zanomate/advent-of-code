@@ -1,5 +1,6 @@
 import { Big } from 'big.js'
 import { readFile } from '../../utils/io'
+import { DaySolution } from '../../utils/type'
 
 interface Machine {
   AX: number
@@ -10,8 +11,8 @@ interface Machine {
   Y: number
 }
 
-export default async function () {
-  const input = await readFile('./src/2024/day13/input.txt').then((text) => text.trim())
+export default async function (inputFile: string): Promise<DaySolution> {
+  const input = await readFile(inputFile).then((text) => text.trim())
   const machines: Machine[] = input.split('\n\n').map((machine) => {
     const [buttonA, buttonB, prize] = machine.split('\n')
     const matchButtonA = buttonA.match(/^Button A: X\+(\d+), Y\+(\d+)$/)
@@ -52,7 +53,5 @@ export default async function () {
 
   const t1 = performance.now()
 
-  console.log('Part 1:', part1)
-  console.log('Part 2:', part2)
-  console.log('Time (ms):', t1 - t0)
+  return [part1, part2, t1 - t0]
 }

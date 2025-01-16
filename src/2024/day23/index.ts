@@ -1,8 +1,11 @@
 import { readFile } from '../../utils/io'
+import { DaySolution } from '../../utils/type'
 
-export default async function () {
-  const input = await readFile('./src/2024/day23/input.txt').then((text) => text.trim())
+export default async function (inputFile: string): Promise<DaySolution> {
+  const input = await readFile(inputFile).then((text) => text.trim())
   const connections = input.split('\n')
+
+  const t0 = performance.now()
 
   const nodeConnections = new Map<string, Set<string>>()
   connections.forEach((connection) => {
@@ -32,8 +35,6 @@ export default async function () {
     }
   }
 
-  console.log('Part 1:', clusters.size)
-
   let biggestCluster: string[] = []
 
   for (let firstNode of nodes) {
@@ -46,5 +47,10 @@ export default async function () {
     if (cluster.length > biggestCluster.length) biggestCluster = cluster
   }
 
-  console.log('Part 2:', biggestCluster.sort().join(','))
+  const part1 = clusters.size
+  const part2 = biggestCluster.sort().join(',')
+
+  const t1 = performance.now()
+
+  return [part1, part2, t1 - t0]
 }

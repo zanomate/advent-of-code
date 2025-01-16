@@ -2,6 +2,7 @@ import { readFile } from '../../utils/io'
 import { CARDINAL_DIRECTIONS, Dir, turnBack } from '../../utils/space/Dir'
 import { Grid } from '../../utils/space/Grid'
 import { Pos } from '../../utils/space/Pos'
+import { DaySolution } from '../../utils/type'
 
 type Path = Pos[]
 
@@ -31,8 +32,8 @@ interface Cell {
   info: Record<Dir, CellInfo>
 }
 
-export default async function () {
-  const input = await readFile('./src/2024/day16/input.txt').then((text) => text.trim())
+export default async function (inputFile: string): Promise<DaySolution> {
+  const input = await readFile(inputFile).then((text) => text.trim())
   const cells: Cell[][] = input.split('\n').map((row) =>
     row.split('').map(
       (type) =>
@@ -96,9 +97,10 @@ export default async function () {
   const minCostInfos = CARDINAL_DIRECTIONS.map((dir) => endCell.info[dir]).filter((info) => info.cost === minCost)
   const allPos = minCostInfos.flatMap((info) => info.path)
 
+  const part1 = minCost
+  const part2 = allPos.length + 1
+
   const t1 = performance.now()
 
-  console.log('Part 1:', minCost)
-  console.log('Part 2:', allPos.length + 1)
-  console.log('Time (ms):', t1 - t0)
+  return [part1, part2, t1 - t0]
 }

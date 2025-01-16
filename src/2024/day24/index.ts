@@ -1,165 +1,101 @@
+import isEqual from 'lodash/isEqual'
 import { readFile } from '../../utils/io'
+import { DaySolution } from '../../utils/type'
+import { Gate, Operation } from './model/Gate'
+import { Wire, x, z } from './model/Wire'
 
-const name = (letter: string, i: number) => `${letter}${i.toString().padStart(2, '0')}`
+export default async function (inputFile: string): Promise<DaySolution> {
+  const input = await readFile(inputFile).then((text) => text.trim())
+  const [wiresInput, gatesInput] = input.split('\n\n')
 
-type Operation = 'AND' | 'XOR' | 'OR'
-
-class Wire {
-  A: string
-  B: string
-  operation: Operation
-  actual_output: string
-  correct_output: string | null = null
-
-  constructor(A: string, B: string, operation: Operation, output: string) {
-    this.A = A
-    this.B = B
-    this.operation = operation
-    this.actual_output = output
-  }
-
-  get inputs() {
-    return [this.A, this.B]
-  }
-
-  getOtherInput(input: string) {
-    if (this.A === input) return this.B
-    if (this.B === input) return this.A
-    throw new Error(`Wire ${this.actual_output} does not have input ${input}`)
-  }
-
-  get output() {
-    return this.correct_output || this.actual_output
-  }
-}
-
-interface Bit0HalfAdder {
-  xor: Wire
-  and: Wire
-}
-
-interface BitIFullAdder {
-  prevOr: Wire
-  xor1: Wire
-  xor2: Wire
-  and1?: Wire
-  and2?: Wire
-  or?: Wire
-}
-
-export default async function () {
-  const input = await readFile('./src/2024/day24/input.txt').then((text) => text.trim())
-  const [valuesInput, wiresInput] = input.split('\n\n')
-
-  const valueMap = new Map<string, boolean>()
-  valuesInput.split('\n').forEach((line) => {
+  const wireValues = new Map<Wire, boolean>()
+  wiresInput.split('\n').forEach((line) => {
     const [name, value] = line.split(': ')
-    valueMap.set(name, parseInt(value) === 1)
+    wireValues.set(name, parseInt(value) === 1)
   })
 
-  const wires: Wire[] = wiresInput.split('\n').map((line) => {
+  const gates: Gate[] = gatesInput.split('\n').map((line) => {
     const match = line.match(/(\w{3}) (AND|XOR|OR) (\w{3}) -> (\w{3})/)
-    if (!match) throw new Error(`Invalid wire definition: ${line}`)
-    return new Wire(match[1], match[3], match[2] as Wire['operation'], match[4])
+    if (!match) throw new Error('Invalid gate')
+    return new Gate(match[1], match[3], match[2] as Operation, match[4])
   })
 
-  const queue = [...wires]
+  const t0 = performance.now()
+
+  const queue = [...gates]
   while (queue.length) {
-    const wire = queue.shift()!
-    if (!valueMap.has(wire.A) || !valueMap.has(wire.B)) {
-      queue.push(wire)
-    } else {
-      switch (wire.operation) {
-        case 'AND':
-          valueMap.set(wire.output, valueMap.get(wire.A)! && valueMap.get(wire.B)!)
-          break
-        case 'XOR':
-          valueMap.set(wire.output, valueMap.get(wire.A)! !== valueMap.get(wire.B)!)
-          break
-        case 'OR':
-          valueMap.set(wire.output, valueMap.get(wire.A)! || valueMap.get(wire.B)!)
-          break
-      }
+    const gate = queue.shift()!
+    if (!wireValues.has(gate.A) || !wireValues.has(gate.B)) {
+      queue.push(gate)
+      continue
+    }
+    switch (gate.op) {
+      case 'AND':
+        wireValues.set(gate.out, wireValues.get(gate.A)! && wireValues.get(gate.B)!)
+        break
+      case 'XOR':
+        wireValues.set(gate.out, wireValues.get(gate.A)! !== wireValues.get(gate.B)!)
+        break
+      case 'OR':
+        wireValues.set(gate.out, wireValues.get(gate.A)! || wireValues.get(gate.B)!)
+        break
     }
   }
 
-  const xBits: boolean[] = Array.from(valueMap.keys())
-    .filter((key) => key.startsWith('x'))
-    .sort(([a], [b]) => a.localeCompare(b))
-    .map((key) => valueMap.get(key)!)
-
-  const yBits: boolean[] = Array.from(valueMap.keys())
-    .filter((key) => key.startsWith('y'))
-    .sort(([a], [b]) => a.localeCompare(b))
-    .map((key) => valueMap.get(key)!)
-
-  const zNames: string[] = Array.from(valueMap.keys())
+  const zValues = Array.from(wireValues.keys())
     .filter((name) => name.startsWith('z'))
     .sort((a, b) => a.localeCompare(b))
-  const zBits: boolean[] = zNames.map((name) => valueMap.get(name)!)
 
   const part1 = parseInt(
-    zBits
+    zValues
       .reverse()
-      .map((bit) => (bit ? 1 : 0))
+      .map((name) => (wireValues.get(name)! ? '1' : '0'))
       .join(''),
     2,
   )
 
-  console.log('Part 1:', part1)
+  const lastBit = zValues.length - 1
 
-  const findByInputs = (operation: Operation, input1: string, input2: string): Wire | null =>
-    wires.find(
-      (wire) => wire.operation === operation && wire.inputs.includes(input1) && wire.inputs.includes(input2),
-    ) || null
+  const isInput = (wire: Wire): boolean => /[xy]\d{2}/.test(wire)
+  const isOutput = (wire: Wire): boolean => /z\d{2}/.test(wire)
 
-  const findByOutput = (output: string): Wire | null => wires.find((wire) => wire.output === output) || null
-
-  const wrongWires: Wire[] = []
-
-  const swap = (wire1: Wire, wire2: Wire) => {
-    wire1.correct_output = wire2.actual_output
-    wire2.correct_output = wire1.actual_output
-    wrongWires.push(wire1)
-    wrongWires.push(wire2)
+  const usages = new Map<Wire, Gate[]>()
+  for (let gate of gates) {
+    if (!usages.has(gate.A)) usages.set(gate.A, [])
+    usages.get(gate.A)?.push(gate)
+    if (!usages.has(gate.B)) usages.set(gate.B, [])
+    usages.get(gate.B)?.push(gate)
   }
 
-  let bit = 0
-  // @ts-ignore
-  let carry: Wire = null
-  while (true) {
-    if (bit === 0) {
-      carry = findByInputs('AND', name('x', bit), name('y', bit)) as Wire
-    } else {
-      const xor1 = findByInputs('XOR', name('x', bit), name('y', bit)) as Wire
-      const and2 = findByInputs('AND', name('x', bit), name('y', bit)) as Wire
-      const xor2 = findByInputs('XOR', xor1.output, carry.output)
-
-      if (xor2 === null) {
-        swap(xor1, and2)
-        bit = 0
-        continue
+  const swapped = new Set<Wire>()
+  for (let gate of gates) {
+    if (gate.inputs.includes(x(0)) || gate.out === z(lastBit)) continue
+    if (gate.op === 'XOR') {
+      if (isInput(gate.A)) {
+        if (!isInput(gate.B)) swapped.add(gate.out)
+        if (isOutput(gate.out) && gate.out !== 'z00') swapped.add(gate.out)
+        const gatesUsedByOut = usages.get(gate.out)
+        const operations = gatesUsedByOut?.map((g) => g.op).sort()
+        if (gate.out !== 'z00' && !isEqual(operations, ['AND', 'XOR'])) swapped.add(gate.out)
+      } else if (!isOutput(gate.out)) swapped.add(gate.out)
+    } else if (gate.op === 'AND') {
+      if (isInput(gate.A)) {
+        if (!isInput(gate.B)) swapped.add(gate.out)
       }
-
-      if (xor2.output !== name('z', bit)) {
-        swap(xor2, findByOutput(name('z', bit)) as Wire)
-        bit = 0
-        continue
-      }
-
-      const and1 = findByInputs('AND', carry.output, xor1.output) as Wire
-      const or = findByInputs('OR', and1.output, and2.output) as Wire
-      carry = or
+      const gatesUsedByOut = usages.get(gate.out)
+      const operations = gatesUsedByOut?.map((g) => g.op).sort()
+      if (!isEqual(operations, ['OR'])) swapped.add(gate.out)
+    } else if (gate.op === 'OR') {
+      if (isInput(gate.A) || isInput(gate.B)) swapped.add(gate.out)
+      const gatesUsedByOut = usages.get(gate.out)
+      const operations = gatesUsedByOut?.map((g) => g.op).sort()
+      if (!isEqual(operations, ['AND', 'XOR'])) swapped.add(gate.out)
     }
-
-    bit++
-    if (bit >= zBits.length - 1) break
   }
 
-  const part2 = wrongWires
-    .map((wire) => wire.output)
-    .sort()
-    .join(',')
+  const part2 = Array.from(swapped.values()).sort().join(',')
 
-  console.log('Part 2:', part2)
+  const t1 = performance.now()
+
+  return [part1, part2, t1 - t0]
 }

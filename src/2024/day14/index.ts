@@ -2,6 +2,7 @@ import { readFile } from '../../utils/io'
 import { Dir } from '../../utils/space/Dir'
 import { Grid } from '../../utils/space/Grid'
 import { Pos } from '../../utils/space/Pos'
+import { DaySolution } from '../../utils/type'
 
 interface Instruction {
   posX: number
@@ -61,8 +62,8 @@ export class Area {
   }
 }
 
-export default async function () {
-  const input = await readFile('./src/2024/day14/input.txt').then((text) => text.trim())
+export default async function (inputFile: string): Promise<DaySolution> {
+  const input = await readFile(inputFile).then((text) => text.trim())
   const instructions: Instruction[] = input.split('\n').map((instruction) => {
     const match = instruction.match(/p=(.+),(.+) v=(.+),(.+)/) || []
     if (match === null) throw new Error('Invalid instruction')
@@ -102,7 +103,5 @@ export default async function () {
 
   const t1 = performance.now()
 
-  console.log('Part 1:', part1)
-  console.log('Part 2:', part2)
-  console.log('Time (ms):', t1 - t0)
+  return [part1, part2, t1 - t0]
 }

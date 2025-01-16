@@ -1,4 +1,5 @@
 import { readFile } from '../../utils/io'
+import { DaySolution } from '../../utils/type'
 
 const memoizedCounts: Map<string, number> = new Map<string, number>()
 
@@ -34,22 +35,20 @@ function blinkIterative(stone: number, iterations: number): number {
   return res
 }
 
-export default async function () {
-  const input = await readFile('./src/2024/day11/input.txt').then((text) => text.trim())
+export default async function (inputFile: string): Promise<DaySolution> {
+  const input = await readFile(inputFile).then((text) => text.trim())
   let stones = input.split(' ').map((num) => parseInt(num))
 
   const t0 = performance.now()
 
-  let tot1 = 0
-  let tot2 = 0
+  let part1 = 0
+  let part2 = 0
   for (let i = 0; i < stones.length; i++) {
-    tot1 += blinkIterative(stones[i], 25)
-    tot2 += blinkIterative(stones[i], 75)
+    part1 += blinkIterative(stones[i], 25)
+    part2 += blinkIterative(stones[i], 75)
   }
 
   const t1 = performance.now()
 
-  console.log('Part 1:', tot1)
-  console.log('Part 2:', tot2)
-  console.log('Time (ms):', t1 - t0)
+  return [part1, part2, t1 - t0]
 }

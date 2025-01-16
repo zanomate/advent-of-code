@@ -2,7 +2,8 @@
   "name": "advent15",
   "version": "1.0.0",
   "scripts": {
-    "start": "tsc && node dist/index.js"
+    "start": "tsx -e \"import('src/index.ts').then(m => m.resolve())\"",
+    "test": "jest"
   },
   "author": "",
   "license": "ISC",
@@ -14,10 +15,13 @@
   },
   "devDependencies": {
     "@types/big.js": "^6.2.2",
+    "@types/jest": "^29.5.14",
     "@types/lodash": "^4.17.13",
     "@types/md5": "^2.3.5",
     "@types/node": "^22.10.2",
+    "jest": "^29.7.0",
     "prettier": "^3.4.2",
-    "ts-node": "^10.9.2"
+    "ts-jest": "^29.2.5",
+    "tsx": "^4.19.2"
   }
 }

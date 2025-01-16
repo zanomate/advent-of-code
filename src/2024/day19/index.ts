@@ -1,7 +1,8 @@
 import { readFile } from '../../utils/io'
+import { DaySolution } from '../../utils/type'
 
-export default async function () {
-  const input = await readFile('./src/2024/day19/input.txt').then((text) => text.trim())
+export default async function (inputFile: string): Promise<DaySolution> {
+  const input = await readFile(inputFile).then((text) => text.trim())
   const [towelsInput, designsInput] = input.split('\n\n')
   const towels: string[] = towelsInput.split(', ')
   const designs: string[] = designsInput.split('\n')
@@ -26,19 +27,17 @@ export default async function () {
     return count
   }
 
-  let possibleDesigns = 0
-  let allWaysToCreateAnyDesign = 0
+  let part1 = 0
+  let part2 = 0
   designs.forEach((design) => {
     const waysToCreateDesign = countWaysToCreateDesign(design)
     if (waysToCreateDesign > 0) {
-      possibleDesigns++
-      allWaysToCreateAnyDesign += waysToCreateDesign
+      part1++
+      part2 += waysToCreateDesign
     }
   })
 
   const t1 = performance.now()
 
-  console.log('Part 1:', possibleDesigns)
-  console.log('Part 2:', allWaysToCreateAnyDesign)
-  console.log('Time (ms):', t1 - t0)
+  return [part1, part2, t1 - t0]
 }

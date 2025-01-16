@@ -2,6 +2,7 @@ import { readFile } from '../../utils/io'
 import { getCombinations } from '../../utils/math'
 import { Grid } from '../../utils/space/Grid'
 import { Pos } from '../../utils/space/Pos'
+import { DaySolution } from '../../utils/type'
 
 interface Equation {
   solution: number
@@ -25,8 +26,8 @@ function findSolution(result: number, values: number[], enableConcat: boolean): 
   return null
 }
 
-export default async function () {
-  const input = await readFile('./src/2024/day7/input.txt').then((text) => text.trim())
+export default async function (inputFile: string): Promise<DaySolution> {
+  const input = await readFile(inputFile).then((text) => text.trim())
   const equations: Equation[] = input
     .split('\n')
     .map((line) => line.match(/(\d+):\s(.+)/))
@@ -49,7 +50,5 @@ export default async function () {
 
   const t1 = performance.now()
 
-  console.log('Part 1:', part1)
-  console.log('Part 2:', part2)
-  console.log('Time (ms):', t1 - t0)
+  return [part1, part2, t1 - t0]
 }

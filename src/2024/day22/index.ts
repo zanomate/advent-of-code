@@ -1,4 +1,5 @@
 import { readFile } from '../../utils/io'
+import { DaySolution } from '../../utils/type'
 
 const mix = (prev: number, value: number): number => {
   return value ^ prev
@@ -16,8 +17,8 @@ const next = (prev: number): number => {
   return res
 }
 
-export default async function () {
-  const input = await readFile('./src/2024/day22/input.txt').then((text) => text.trim())
+export default async function (inputFile: string): Promise<DaySolution> {
+  const input = await readFile(inputFile).then((text) => text.trim())
   const lines = input.split('\n')
   const nums = lines.map((line) => parseInt(line))
 
@@ -54,9 +55,11 @@ export default async function () {
 
   const sum = lastNums.reduce((tot, num) => tot + num, 0)
   const bestTotalPrice = Math.max(...Array.from(sequencesSum.values()))
+
+  const part1 = Number(sum)
+  const part2 = bestTotalPrice
+
   const t1 = performance.now()
 
-  console.log('Part 1:', Number(sum))
-  console.log('Part 2:', bestTotalPrice)
-  console.log('Time (ms)', t1 - t0)
+  return [part1, part2, t1 - t0]
 }
