@@ -1,6 +1,5 @@
 import { readFile } from '../../utils/io'
-import { DiagonalDir } from '../../utils/space/DiagonalDir'
-import { ALL_DIRECTIONS, Dir } from '../../utils/space/Dir'
+import { ALL_DIRECTIONS, DiagDir, Dir } from '../../utils/space/Dir'
 import { Grid } from '../../utils/space/Grid'
 import { Pos } from '../../utils/space/Pos'
 import { DaySolution } from '../../utils/type'
@@ -14,9 +13,9 @@ export class Field {
     this.grid = Grid.fromValues(cells)
   }
 
-  isXMAS1(pos: Pos, dir: Dir | DiagonalDir): boolean {
+  isXMAS1(pos: Pos, dir: Dir | DiagDir): boolean {
     return ['X', 'M', 'A', 'S'].every((char, index) => {
-      const ithPos = pos.shift8Dir(dir, index)
+      const ithPos = pos.shift(dir, index)
       return char === this.grid.getCell(ithPos)
     })
   }
@@ -24,12 +23,7 @@ export class Field {
   isXMAS2(pos: Pos): boolean {
     if (this.grid.getCell(pos) !== 'A') return false
 
-    const borderPosList = [
-      pos.shiftDiagonal(DiagonalDir.UP_RIGHT, 1),
-      pos.shiftDiagonal(DiagonalDir.DOWN_RIGHT, 1),
-      pos.shiftDiagonal(DiagonalDir.DOWN_LEFT, 1),
-      pos.shiftDiagonal(DiagonalDir.UP_LEFT, 1),
-    ]
+    const borderPosList = pos.neighbours('x')
     const border = borderPosList.map((borderPos) => this.grid.getCell(borderPos)).join('')
 
     return MAS_COMBINATIONS.includes(border)

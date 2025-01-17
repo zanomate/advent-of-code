@@ -1,15 +1,17 @@
 import { readFile } from '../../utils/io'
 import { DaySolution } from '../../utils/type'
 
-function getDivisors(n: number, limit: number = Infinity): number[] {
-  const divisors: number[] = []
-  for (let i = 1; i <= Math.sqrt(n); i++) {
-    if (n % i === 0) {
-      divisors.push(i)
-      if (i !== n / i) divisors.push(n / i)
+function presents(house: number, housesPerElf: number, presentsPerElf: number): number {
+  let sum = 0
+  let limit = Math.sqrt(house)
+  for (let elf = 1; elf <= limit; elf++) {
+    if (house % elf === 0) {
+      if (house <= elf * housesPerElf) sum += elf
+      const otherElf = house / elf
+      if (elf !== otherElf && house <= otherElf * housesPerElf) sum += otherElf
     }
   }
-  return divisors.filter((i) => i * limit >= n).sort((a, b) => a - b)
+  return sum * presentsPerElf
 }
 
 export default async function (inputFile: string): Promise<DaySolution> {
@@ -18,17 +20,12 @@ export default async function (inputFile: string): Promise<DaySolution> {
 
   const t0 = performance.now()
 
-  const computePresents = (house: number, presentsPerElf: number, housesPerElf: number) => {
-    return getDivisors(house, housesPerElf).reduce((tot, factor) => tot + factor * presentsPerElf, 0)
-  }
-
-  let presents
   let house = 1
-  while ((presents = computePresents(house, 10, Infinity)) < targetPresents) house++
+  while (presents(house, Infinity, 10) < targetPresents) house++
   const part1 = house
 
   house = 1
-  while ((presents = computePresents(house, 11, 50)) < targetPresents) house++
+  while (presents(house, 50, 11) < targetPresents) house++
   const part2 = house
 
   const t1 = performance.now()

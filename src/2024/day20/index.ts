@@ -60,7 +60,7 @@ export default async function (inputFile: string): Promise<DaySolution> {
     seconds.set(pos.toString(), time)
 
     for (const dir of XY_DIRECTIONS) {
-      const newPos = pos.shift(dir, 1)
+      const newPos = pos.shift(dir)
       if (grid.hasCell(newPos) && grid.getCell(newPos) !== Cell.WALL) {
         queue.push([newPos, time + 1])
       }

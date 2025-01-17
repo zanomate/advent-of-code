@@ -17,8 +17,17 @@ export enum DiagDir {
 export type DirSystem = '+' | 'x' | '8'
 
 export const XY_DIRECTIONS = [Dir.UP, Dir.RIGHT, Dir.DOWN, Dir.LEFT]
-export const DIAG_DIRECTIONS = [DiagDir.UP_LEFT, DiagDir.UP_RIGHT, DiagDir.DOWN_LEFT, DiagDir.DOWN_RIGHT]
-export const ALL_DIRECTIONS = [...XY_DIRECTIONS, ...DIAG_DIRECTIONS]
+export const DIAG_DIRECTIONS = [DiagDir.UP_RIGHT, DiagDir.DOWN_RIGHT, DiagDir.DOWN_LEFT, DiagDir.UP_LEFT]
+export const ALL_DIRECTIONS = [
+  Dir.UP,
+  DiagDir.UP_RIGHT,
+  Dir.RIGHT,
+  DiagDir.DOWN_RIGHT,
+  Dir.DOWN,
+  DiagDir.DOWN_LEFT,
+  Dir.LEFT,
+  DiagDir.UP_LEFT,
+]
 
 export const turnLeft = (direction: Dir): Dir => {
   return XY_DIRECTIONS[(XY_DIRECTIONS.indexOf(direction) - 1 + 4) % 4]
@@ -30,11 +39,6 @@ export const turnRight = (direction: Dir): Dir => {
 
 export const turnBack = (direction: Dir): Dir => {
   return XY_DIRECTIONS[(XY_DIRECTIONS.indexOf(direction) + 2) % 4]
-}
-
-export const flipVertically = (direction: Dir): Dir => {
-  if ([Dir.UP, Dir.DOWN].includes(direction)) return direction === Dir.UP ? Dir.DOWN : Dir.UP
-  return direction
 }
 
 export const parseDirFromChar = (char: string): Dir => {

@@ -72,7 +72,7 @@ export default async function (inputFile: string): Promise<DaySolution> {
         const stepCost = prevDir === nextDir ? 1 : 1001
         const candidateCost = prevCost + stepCost
 
-        const nextPos = pos.shift(nextDir, 1)
+        const nextPos = pos.shift(nextDir)
         const nextCell = grid.getCell(nextPos)
         if (nextCell === null) return
         if (nextCell.type === CellType.WALL) return

@@ -58,13 +58,13 @@ export class Field {
 
     return adjacentDirections.some((direction) => {
       const cellsInDirection: Cell[] = []
-      let nextPos = pos.shift(direction, 1)
+      let nextPos = pos.shift(direction)
       while (this.grid.hasCell(nextPos)) {
         const cell = this.grid.getCell(nextPos)!
         if (cell.plant !== plant) break
         if (cell.sides[fenceDirection] !== SideType.FENCE) break
         cellsInDirection.push(cell)
-        nextPos = nextPos.shift(direction, 1)
+        nextPos = nextPos.shift(direction)
       }
       return cellsInDirection.some((cell) => cell.countedAsSide)
     })
@@ -76,7 +76,7 @@ export class Field {
     this.visitCell(pos)
     const cell = this.grid.getCell(pos)!
     const directionsToVisit = XY_DIRECTIONS.filter((direction) => {
-      const neighborPos = cell.pos.shift(direction, 1)
+      const neighborPos = cell.pos.shift(direction)
       const neighborCell = this.grid.getCell(neighborPos)!
       if (neighborCell === null || neighborCell.plant !== cell.plant) {
         cell.sides[direction] = SideType.FENCE
@@ -85,7 +85,7 @@ export class Field {
       cell.sides[direction] = SideType.EMPTY
       return !neighborCell.visited
     })
-    return [cell, ...directionsToVisit.flatMap((direction) => this.getRegion(cell.pos.shift(direction, 1)))]
+    return [cell, ...directionsToVisit.flatMap((direction) => this.getRegion(cell.pos.shift(direction)))]
   }
 
   getSides(pos: Pos): number {
@@ -101,7 +101,7 @@ export class Field {
       }
     })
     XY_DIRECTIONS.filter((dir) => cell.sides[dir] === SideType.EMPTY).forEach((direction) => {
-      res += this.getSides(cell.pos.shift(direction, 1))
+      res += this.getSides(cell.pos.shift(direction))
     })
 
     return res

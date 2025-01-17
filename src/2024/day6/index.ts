@@ -31,7 +31,7 @@ export class Field {
     const currentPos = this.guardPos
     if (currentPos === null) throw new Error('Guard is not in the field')
 
-    const nextPos = currentPos.shiftVFlipped(this.guardDir, 1)
+    const nextPos = currentPos.shift(this.guardDir)
     // if it reached an edge of the field
     if (nextPos === null || this.grid.getCell(nextPos) === null) {
       this.guardPos = null
@@ -68,7 +68,7 @@ export default async function (inputFile: string): Promise<DaySolution> {
   const field = new Field(cells)
   while (field.guardPos !== null) {
     visited.add(field.guardPos.toString())
-    const nextPos = field.guardPos.shiftVFlipped(field.guardDir, 1)
+    const nextPos = field.guardPos.shift(field.guardDir)
     const nextCell = field.grid.getCell(nextPos)
     if (nextCell !== null && !obstructions.has(nextPos.toString())) {
       // try adding obstacle to next position

@@ -53,7 +53,7 @@ describe('2024', () => {
     await testDay(2024, 13, 'sample', 480, null)
     await testDay(2024, 13, 'input', 36870, 78101482023732)
   })
-  xit(`Day 14`, async () => {
+  it(`Day 14`, async () => {
     await testDay(2024, 14, 'sample', 12, null)
     await testDay(2024, 14, 'input', 218619324, 6446)
   })
@@ -75,7 +75,7 @@ describe('2024', () => {
   xit(`Day 18`, async () => {
     await testDay(2024, 18, 'input', 268, '64,11')
   })
-  xit(`Day 19`, async () => {
+  it(`Day 19`, async () => {
     await testDay(2024, 19, 'sample', 6, 16)
     await testDay(2024, 19, 'input', 276, 681226908011510)
   })

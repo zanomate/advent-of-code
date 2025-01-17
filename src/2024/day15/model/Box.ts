@@ -52,6 +52,6 @@ export class Box {
   }
 
   move(direction: Dir) {
-    this.pos = this.pos.shift(direction, 1)
+    this.pos = this.pos.shift(direction)
   }
 }

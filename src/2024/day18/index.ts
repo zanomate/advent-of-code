@@ -44,7 +44,7 @@ export default async function (inputFile: string): Promise<DaySolution> {
       if (lastPos.equals(end)) return path.length - 1
 
       XY_DIRECTIONS.forEach((dir) => {
-        const nextPos = lastPos.shift(dir, 1)
+        const nextPos = lastPos.shift(dir)
         if (grid.hasCell(nextPos) && grid.getCell(nextPos) !== Cell.WALL) {
           queue.push([...path, nextPos])
         }

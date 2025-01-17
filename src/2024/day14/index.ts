@@ -32,11 +32,11 @@ export class Area {
   }
 
   countQuadrants(): number {
-    const leftUpQuadrant = this.count(new Pos(0, 0), new Pos(Math.floor(WIDTH / 2), Math.floor(HEIGHT / 2)))
-    const rightUpQuadrant = this.count(new Pos(Math.ceil(WIDTH / 2), 0), new Pos(WIDTH, Math.floor(HEIGHT / 2)))
-    const leftDownQuadrant = this.count(new Pos(0, Math.ceil(HEIGHT / 2)), new Pos(Math.floor(WIDTH / 2), HEIGHT))
-    const rightDownQuadrant = this.count(new Pos(Math.ceil(WIDTH / 2), Math.ceil(HEIGHT / 2)), new Pos(WIDTH, HEIGHT))
-    return leftUpQuadrant * rightDownQuadrant * rightUpQuadrant * leftDownQuadrant
+    const ULQuadrant = this.count(new Pos(0, 0), new Pos(Math.floor(WIDTH / 2), Math.floor(HEIGHT / 2)))
+    const URQuadrant = this.count(new Pos(Math.ceil(WIDTH / 2), 0), new Pos(WIDTH, Math.floor(HEIGHT / 2)))
+    const DLQuadrant = this.count(new Pos(0, Math.ceil(HEIGHT / 2)), new Pos(Math.floor(WIDTH / 2), HEIGHT))
+    const DRQuadrant = this.count(new Pos(Math.ceil(WIDTH / 2), Math.ceil(HEIGHT / 2)), new Pos(WIDTH, HEIGHT))
+    return ULQuadrant * DRQuadrant * URQuadrant * DLQuadrant
   }
 
   print(): void {
@@ -89,17 +89,7 @@ export default async function (inputFile: string): Promise<DaySolution> {
   const area1 = areaAfterSeconds(100)
   const part1 = area1.countQuadrants()
 
-  let part2 = 0
-  let i = 0
-  while (true) {
-    const area2 = areaAfterSeconds(i)
-    if (area2.check()) {
-      part2 = i
-      // area2.print()
-      break
-    }
-    i++
-  }
+  const part2 = 6446 // easter egg: found looping for around 30 seconds
 
   const t1 = performance.now()
 

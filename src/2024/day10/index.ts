@@ -22,7 +22,7 @@ export class Field {
     if (currentValue === null) return []
     if (currentValue === 9) return [pos]
     return [Dir.UP, Dir.RIGHT, Dir.DOWN, Dir.LEFT]
-      .map((dir) => pos.shift(dir, 1))
+      .map((dir) => pos.shift(dir))
       .filter((nextPos) => this.grid.getCell(nextPos) === currentValue + 1)
       .flatMap((nextPos) => this.getTrailheadEnds(nextPos))
   }

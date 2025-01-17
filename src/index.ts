@@ -6,8 +6,8 @@ export const resolveDay = async (year: number, day: number, inputFile: string): 
   return solution.default(`./src/${year}/day${day}/${inputFile}.txt`)
 }
 
-const YEAR = 2015
-const DAY = 4
+const YEAR = 2024
+const DAY = 14
 
 export const resolve = async () => {
   try {

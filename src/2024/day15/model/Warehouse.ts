@@ -61,12 +61,12 @@ export class Warehouse {
     if (![Cell.BOX_HEAD, Cell.BOX_TAIL].includes(this.grid.getCell(pos)!)) throw new Error('Not a box')
     let cursor: Pos = pos
     let res: Cell
-    while ((res = this.grid.getCell(cursor)!) !== Cell.BOX_HEAD) cursor = cursor.shift(Dir.LEFT, 1)
+    while ((res = this.grid.getCell(cursor)!) !== Cell.BOX_HEAD) cursor = cursor.shift(Dir.LEFT)
     return cursor.toString()
   }
 
   moveCell(pos: Pos, dir: Dir) {
-    const dest = pos.shift(dir, 1)
+    const dest = pos.shift(dir)
     if (this.grid.getCell(dest) !== Cell.EMPTY) throw new Error(`Cannot move to ${pos.toString()} (non-empty)`)
     this.grid.setCell(dest, this.grid.getCell(pos)!)
     this.grid.setCell(pos, Cell.EMPTY)
@@ -75,7 +75,7 @@ export class Warehouse {
   // movement check
 
   canMoveSomething(pos: Pos, dir: Dir): boolean {
-    const destPos = pos.shift(dir, 1)
+    const destPos = pos.shift(dir)
     const destCell = this.grid.getCell(destPos)
     switch (destCell) {
       case Cell.EMPTY:
@@ -104,7 +104,7 @@ export class Warehouse {
   // movement actions
 
   moveSomething(pos: Pos, dir: Dir) {
-    const targetPos = pos.shift(dir, 1)
+    const targetPos = pos.shift(dir)
     const targetCell = this.grid.getCell(targetPos)
     switch (targetCell) {
       case Cell.ROBOT:
