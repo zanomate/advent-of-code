@@ -1,10 +1,13 @@
 import { readFile } from '../../utils/io'
+import { DaySolution } from '../../utils/type'
 
 type Path = { cities: string[]; distance: number }
 
-export default async function () {
-  const input = await readFile('./src/2015/day9/input.txt').then((text) => text.trim())
+export default async function (inputFile: string): Promise<DaySolution> {
+  const input = await readFile(inputFile).then((text) => text.trim())
   const lines = input.split('\n')
+
+  const t0 = performance.now()
 
   const cities = new Set<string>()
   const distances: Record<string, Record<string, number>> = {}
@@ -48,6 +51,10 @@ export default async function () {
 
   const [shortest, longest] = getShortestPath(null, Array.from(cities))
 
-  console.log('Part 1:', shortest.distance)
-  console.log('Part 2:', longest.distance)
+  const part1 = shortest.distance
+  const part2 = longest.distance
+
+  const t1 = performance.now()
+
+  return [part1, part2, t1 - t0]
 }

@@ -1,8 +1,11 @@
 import { readFile } from '../../utils/io'
+import { DaySolution } from '../../utils/type'
 
-export default async function () {
-  const input = await readFile('./src/2015/day6/input.txt').then((text) => text.trim())
+export default async function (inputFile: string): Promise<DaySolution> {
+  const input = await readFile(inputFile).then((text) => text.trim())
   const instructions = input.split('\n')
+
+  const t0 = performance.now()
 
   const grid1: boolean[][] = Array.from({ length: 1000 }, () => Array.from({ length: 1000 }, () => false))
   const grid2: number[][] = Array.from({ length: 1000 }, () => Array.from({ length: 1000 }, () => 0))
@@ -58,15 +61,16 @@ export default async function () {
     }
   })
 
-  let lit1 = 0
-  let lit2 = 0
+  let part1 = 0
+  let part2 = 0
   for (let y = 0; y < 1000; y++) {
     for (let x = 0; x < 1000; x++) {
-      if (grid1[y][x]) lit1++
-      if (grid2[y][x] > 0) lit2 += grid2[y][x]
+      if (grid1[y][x]) part1++
+      if (grid2[y][x] > 0) part2 += grid2[y][x]
     }
   }
 
-  console.log('Part 1:', lit1)
-  console.log('Part 2:', lit2)
+  const t1 = performance.now()
+
+  return [part1, part2, t1 - t0]
 }

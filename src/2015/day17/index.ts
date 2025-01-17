@@ -1,4 +1,5 @@
 import { readFile } from '../../utils/io'
+import { DaySolution } from '../../utils/type'
 
 const getCombinations = (containers: number[], total: number): number[][] => {
   const res: number[][] = []
@@ -16,16 +17,20 @@ const getCombinations = (containers: number[], total: number): number[][] => {
   return res
 }
 
-export default async function () {
-  const input = await readFile('./src/2015/day17/input.txt').then((text) => text.trim())
+export default async function (inputFile: string): Promise<DaySolution> {
+  const input = await readFile(inputFile).then((text) => text.trim())
   const containers = input.split('\n').map((str) => parseInt(str))
 
-  const combinations = getCombinations(containers, 150)
+  const t0 = performance.now()
 
-  console.log('Part 1:', combinations.length)
+  const combinations = getCombinations(containers, 150)
+  const part1 = combinations.length
 
   const minLength = Math.min(...combinations.map((c) => c.length))
   const combinationsWithMinLength = combinations.filter((c) => c.length === minLength)
+  const part2 = combinationsWithMinLength.length
 
-  console.log('Part 2:', combinationsWithMinLength.length)
+  const t1 = performance.now()
+
+  return [part1, part2, t1 - t0]
 }

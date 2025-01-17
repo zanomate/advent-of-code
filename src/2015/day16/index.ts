@@ -1,4 +1,5 @@
 import { readFile } from '../../utils/io'
+import { DaySolution } from '../../utils/type'
 
 interface Aunt {
   index: number
@@ -10,9 +11,23 @@ interface Detection {
   value: number
 }
 
-export default async function () {
-  const input = await readFile('./src/2015/day16/input.txt').then((text) => text.trim())
-  const input2 = await readFile('./src/2015/day16/input2.txt').then((text) => text.trim())
+const detections: Detection[] = [
+  { detail: 'children', value: 3 },
+  { detail: 'cats', value: 7 },
+  { detail: 'samoyeds', value: 2 },
+  { detail: 'pomeranians', value: 3 },
+  { detail: 'akitas', value: 0 },
+  { detail: 'vizslas', value: 0 },
+  { detail: 'goldfish', value: 5 },
+  { detail: 'trees', value: 3 },
+  { detail: 'cars', value: 2 },
+  { detail: 'perfumes', value: 1 },
+]
+
+export default async function (inputFile: string): Promise<DaySolution> {
+  const input = await readFile(inputFile).then((text) => text.trim())
+
+  const t0 = performance.now()
 
   const aunts: Aunt[] = input.split('\n').map((line) => {
     const firstSeparator = line.indexOf(':')
@@ -29,12 +44,6 @@ export default async function () {
     return { index, details }
   })
 
-  const detections: Detection[] = input2.split('\n').map((line) => {
-    const match = line.match(/(\w+): (\d+)/)
-    if (match === null) throw new Error('invalid line')
-    return { detail: match[1], value: parseInt(match[2]) }
-  })
-
   let search1 = [...aunts]
   for (let detection of detections) {
     search1 = search1.filter((aunt) => {
@@ -42,8 +51,6 @@ export default async function () {
       return auntValue === undefined || auntValue === detection.value
     })
   }
-
-  console.log('Part 1:', search1[0].index)
 
   let search2 = [...aunts]
   for (let detection of detections) {
@@ -56,5 +63,10 @@ export default async function () {
     })
   }
 
-  console.log('Part 2:', search2[0].index)
+  const part1 = search1[0].index
+  const part2 = search2[0].index
+
+  const t1 = performance.now()
+
+  return [part1, part2, t1 - t0]
 }

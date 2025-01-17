@@ -1,11 +1,14 @@
 import { readFile } from '../../utils/io'
+import { DaySolution } from '../../utils/type'
 
-export default async function () {
-  const input = await readFile('./src/2015/day25/input.txt').then((text) => text.trim())
+export default async function (inputFile: string): Promise<DaySolution> {
+  const input = await readFile(inputFile).then((text) => text.trim())
   const match = input.match(/row (\d+), column (\d+)/)
   if (match === null) throw new Error('invalid input')
   const targetRow = parseInt(match[1])
   const targetCol = parseInt(match[2])
+
+  const t0 = performance.now()
 
   let d = 1
   let r = 1
@@ -24,5 +27,7 @@ export default async function () {
     num = (num * 252533) % 33554393
   }
 
-  console.log('Part 1:', num)
+  const t1 = performance.now()
+
+  return [num, null, t1 - t0]
 }

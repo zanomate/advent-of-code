@@ -1,10 +1,13 @@
 import { readFile } from '../../utils/io'
+import { DaySolution } from '../../utils/type'
 
 type Replacement = [string, string]
 
-export default async function () {
-  const input = await readFile('./src/2015/day19/input.txt').then((text) => text.trim())
+export default async function (inputFile: string): Promise<DaySolution> {
+  const input = await readFile(inputFile).then((text) => text.trim())
   const [replacementsInput, molecule] = input.split('\n\n')
+
+  const t0 = performance.now()
 
   const replacements: Replacement[] = replacementsInput
     .split('\n')
@@ -23,18 +26,20 @@ export default async function () {
 
   const allSubs = evolve(molecule)
 
-  console.log('Part 1:', allSubs.length)
+  const part1 = allSubs.length
 
-  let iter = 0
+  let part2 = 0
   let current = molecule
   while (current !== 'e') {
     for (let [from, to] of replacements) {
       if (current.includes(to)) {
         current = current.replace(new RegExp(to), from)
-        iter++
+        part2++
       }
     }
   }
 
-  console.log('Part 2:', iter)
+  const t1 = performance.now()
+
+  return [part1, part2, t1 - t0]
 }

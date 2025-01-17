@@ -1,3 +1,4 @@
+/** Cardinal direction */
 export enum Dir {
   UP = '^',
   RIGHT = '>',
@@ -5,34 +6,30 @@ export enum Dir {
   LEFT = '<',
 }
 
-export enum DiagonalDir {
+/** Diagonal direction */
+export enum DiagDir {
   UP_LEFT = '┌',
   UP_RIGHT = '┐',
   DOWN_LEFT = '∟',
   DOWN_RIGHT = '┘',
 }
 
-export const CARDINAL_DIRECTIONS = [Dir.UP, Dir.RIGHT, Dir.DOWN, Dir.LEFT]
+export type DirSystem = '+' | 'x' | '8'
 
-export const DIAGONAL_DIRECTIONS = [
-  DiagonalDir.UP_LEFT,
-  DiagonalDir.UP_RIGHT,
-  DiagonalDir.DOWN_LEFT,
-  DiagonalDir.DOWN_RIGHT,
-]
-
-export const ALL_DIRECTIONS = [...CARDINAL_DIRECTIONS, ...DIAGONAL_DIRECTIONS]
+export const XY_DIRECTIONS = [Dir.UP, Dir.RIGHT, Dir.DOWN, Dir.LEFT]
+export const DIAG_DIRECTIONS = [DiagDir.UP_LEFT, DiagDir.UP_RIGHT, DiagDir.DOWN_LEFT, DiagDir.DOWN_RIGHT]
+export const ALL_DIRECTIONS = [...XY_DIRECTIONS, ...DIAG_DIRECTIONS]
 
 export const turnLeft = (direction: Dir): Dir => {
-  return CARDINAL_DIRECTIONS[(CARDINAL_DIRECTIONS.indexOf(direction) - 1 + 4) % 4]
+  return XY_DIRECTIONS[(XY_DIRECTIONS.indexOf(direction) - 1 + 4) % 4]
 }
 
 export const turnRight = (direction: Dir): Dir => {
-  return CARDINAL_DIRECTIONS[(CARDINAL_DIRECTIONS.indexOf(direction) + 1) % 4]
+  return XY_DIRECTIONS[(XY_DIRECTIONS.indexOf(direction) + 1) % 4]
 }
 
 export const turnBack = (direction: Dir): Dir => {
-  return CARDINAL_DIRECTIONS[(CARDINAL_DIRECTIONS.indexOf(direction) + 2) % 4]
+  return XY_DIRECTIONS[(XY_DIRECTIONS.indexOf(direction) + 2) % 4]
 }
 
 export const flipVertically = (direction: Dir): Dir => {

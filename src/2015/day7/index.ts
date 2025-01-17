@@ -1,8 +1,11 @@
 import { readFile } from '../../utils/io'
+import { DaySolution } from '../../utils/type'
 
-export default async function () {
-  const input = await readFile('./src/2015/day7/input.txt').then((text) => text.trim())
+export default async function (inputFile: string): Promise<DaySolution> {
+  const input = await readFile(inputFile).then((text) => text.trim())
   const commands = input.split('\n')
+
+  const t0 = performance.now()
 
   const execCommands = (commands: string[]): Map<string, number> => {
     const values = new Map<string, number>()
@@ -86,13 +89,15 @@ export default async function () {
   }
 
   const exec1 = execCommands(commands)
-  const part1 = exec1.get('a')
-  console.log('Part 1:', part1)
+  const part1 = exec1.get('a')!
 
   const bAssignIndex = commands.findIndex((command) => command.endsWith('-> b'))
   commands[bAssignIndex] = `${part1} -> b`
   const exec2 = execCommands(commands)
 
-  const part2 = exec2.get('a')
-  console.log('Part 2:', part2)
+  const part2 = exec2.get('a')!
+
+  const t1 = performance.now()
+
+  return [part1, part2, t1 - t0]
 }

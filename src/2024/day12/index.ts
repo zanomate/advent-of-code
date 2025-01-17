@@ -1,5 +1,5 @@
 import { readFile } from '../../utils/io'
-import { CARDINAL_DIRECTIONS, Dir } from '../../utils/space/Dir'
+import { XY_DIRECTIONS, Dir } from '../../utils/space/Dir'
 import { Grid } from '../../utils/space/Grid'
 import { Pos } from '../../utils/space/Pos'
 import { DaySolution } from '../../utils/type'
@@ -45,7 +45,7 @@ export class Field {
   }
 
   unvisit(): void {
-    this.grid.getAllCells().forEach((cell) => {
+    this.grid.values.forEach((cell) => {
       cell.visited = false
     })
   }
@@ -75,7 +75,7 @@ export class Field {
     if (this.isCellVisited(pos)) return []
     this.visitCell(pos)
     const cell = this.grid.getCell(pos)!
-    const directionsToVisit = CARDINAL_DIRECTIONS.filter((direction) => {
+    const directionsToVisit = XY_DIRECTIONS.filter((direction) => {
       const neighborPos = cell.pos.shift(direction, 1)
       const neighborCell = this.grid.getCell(neighborPos)!
       if (neighborCell === null || neighborCell.plant !== cell.plant) {
@@ -94,13 +94,13 @@ export class Field {
     this.visitCell(pos)
     const cell = this.grid.getCell(pos)!
     let res = 0
-    CARDINAL_DIRECTIONS.filter((dir) => cell.sides[dir] === SideType.FENCE).forEach((direction) => {
+    XY_DIRECTIONS.filter((dir) => cell.sides[dir] === SideType.FENCE).forEach((direction) => {
       if (!this.isSideAlreadyCounted(pos, direction)) {
         cell.countedAsSide = true
         res++
       }
     })
-    CARDINAL_DIRECTIONS.filter((dir) => cell.sides[dir] === SideType.EMPTY).forEach((direction) => {
+    XY_DIRECTIONS.filter((dir) => cell.sides[dir] === SideType.EMPTY).forEach((direction) => {
       res += this.getSides(cell.pos.shift(direction, 1))
     })
 

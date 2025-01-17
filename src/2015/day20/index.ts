@@ -1,4 +1,5 @@
 import { readFile } from '../../utils/io'
+import { DaySolution } from '../../utils/type'
 
 function getDivisors(n: number, limit: number = Infinity): number[] {
   const divisors: number[] = []
@@ -11,9 +12,11 @@ function getDivisors(n: number, limit: number = Infinity): number[] {
   return divisors.filter((i) => i * limit >= n).sort((a, b) => a - b)
 }
 
-export default async function () {
-  const input = await readFile('./src/2015/day20/input.txt').then((text) => text.trim())
+export default async function (inputFile: string): Promise<DaySolution> {
+  const input = await readFile(inputFile).then((text) => text.trim())
   const targetPresents = parseInt(input)
+
+  const t0 = performance.now()
 
   const computePresents = (house: number, presentsPerElf: number, housesPerElf: number) => {
     return getDivisors(house, housesPerElf).reduce((tot, factor) => tot + factor * presentsPerElf, 0)
@@ -22,9 +25,13 @@ export default async function () {
   let presents
   let house = 1
   while ((presents = computePresents(house, 10, Infinity)) < targetPresents) house++
-  console.log('Part 1:', house)
+  const part1 = house
 
   house = 1
   while ((presents = computePresents(house, 11, 50)) < targetPresents) house++
-  console.log('Part 2:', house)
+  const part2 = house
+
+  const t1 = performance.now()
+
+  return [part1, part2, t1 - t0]
 }

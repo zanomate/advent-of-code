@@ -1,10 +1,13 @@
 import { readFile } from '../../utils/io'
+import { DaySolution } from '../../utils/type'
 
 const a = 'a'.charCodeAt(0)
 const totalChars = 'z'.charCodeAt(0) - a + 1
 
-export default async function () {
-  const input = await readFile('./src/2015/day11/input.txt').then((text) => text.trim())
+export default async function (inputFile: string): Promise<DaySolution> {
+  const input = await readFile(inputFile).then((text) => text.trim())
+
+  const t0 = performance.now()
 
   const nextLetter = (char: string): string => String.fromCharCode(((char.charCodeAt(0) - a + 1) % totalChars) + a)
 
@@ -49,6 +52,7 @@ export default async function () {
     valid = checkValidity(part2)
   }
 
-  console.log('Part 1:', part1)
-  console.log('Part 2:', part2)
+  const t1 = performance.now()
+
+  return [part1, part2, t1 - t0]
 }

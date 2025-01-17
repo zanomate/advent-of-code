@@ -1,8 +1,11 @@
 import { readFile } from '../../utils/io'
+import { DaySolution } from '../../utils/type'
 
-export default async function () {
-  const input = await readFile('./src/2015/day8/input.txt').then((text) => text.trim())
+export default async function (inputFile: string): Promise<DaySolution> {
+  const input = await readFile(inputFile).then((text) => text.trim())
   const strings = input.split('\n')
+
+  const t0 = performance.now()
 
   const countChars = (str: string): number => {
     if (str.length === 0) return 0
@@ -26,6 +29,10 @@ export default async function () {
   const memoryChars = strings.reduce((tot, str) => tot + countChars(str), 0)
   const encodedChars = strings.reduce((tot, str) => tot + countEncodedChars(str), 0)
 
-  console.log('Part 1:', codeChars - memoryChars)
-  console.log('Part 2:', encodedChars - codeChars)
+  const part1 = codeChars - memoryChars
+  const part2 = encodedChars - codeChars
+
+  const t1 = performance.now()
+
+  return [part1, part2, t1 - t0]
 }

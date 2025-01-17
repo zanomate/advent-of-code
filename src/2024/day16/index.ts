@@ -1,5 +1,5 @@
 import { readFile } from '../../utils/io'
-import { CARDINAL_DIRECTIONS, Dir, turnBack } from '../../utils/space/Dir'
+import { XY_DIRECTIONS, Dir, turnBack } from '../../utils/space/Dir'
 import { Grid } from '../../utils/space/Grid'
 import { Pos } from '../../utils/space/Pos'
 import { DaySolution } from '../../utils/type'
@@ -62,10 +62,10 @@ export default async function (inputFile: string): Promise<DaySolution> {
     const pos = queue.shift()!
     if (!grid.hasCell(pos)) continue
     const { info } = grid.getCell(pos)!
-    const prevDirToConsider = CARDINAL_DIRECTIONS.filter((dir) => info[dir].cost < Infinity)
+    const prevDirToConsider = XY_DIRECTIONS.filter((dir) => info[dir].cost < Infinity)
 
     prevDirToConsider.forEach((prevDir) => {
-      const nextDirToConsider = CARDINAL_DIRECTIONS.filter((nextDir) => nextDir !== turnBack(prevDir))
+      const nextDirToConsider = XY_DIRECTIONS.filter((nextDir) => nextDir !== turnBack(prevDir))
       const { cost: prevCost, path: prevPath } = info[prevDir]
 
       nextDirToConsider.forEach((nextDir) => {
@@ -93,8 +93,8 @@ export default async function (inputFile: string): Promise<DaySolution> {
 
   const endPos = new Pos(grid.width - 2, 1)
   const endCell = grid.getCell(endPos)!
-  const minCost = Math.min(...CARDINAL_DIRECTIONS.map((dir) => endCell.info[dir].cost))
-  const minCostInfos = CARDINAL_DIRECTIONS.map((dir) => endCell.info[dir]).filter((info) => info.cost === minCost)
+  const minCost = Math.min(...XY_DIRECTIONS.map((dir) => endCell.info[dir].cost))
+  const minCostInfos = XY_DIRECTIONS.map((dir) => endCell.info[dir]).filter((info) => info.cost === minCost)
   const allPos = minCostInfos.flatMap((info) => info.path)
 
   const part1 = minCost

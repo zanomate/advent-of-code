@@ -1,5 +1,5 @@
 import { readFile } from '../../utils/io'
-import { CARDINAL_DIRECTIONS } from '../../utils/space/Dir'
+import { XY_DIRECTIONS } from '../../utils/space/Dir'
 import { Grid } from '../../utils/space/Grid'
 import { Pos } from '../../utils/space/Pos'
 import { DaySolution } from '../../utils/type'
@@ -43,7 +43,7 @@ export default async function (inputFile: string): Promise<DaySolution> {
 
       if (lastPos.equals(end)) return path.length - 1
 
-      CARDINAL_DIRECTIONS.forEach((dir) => {
+      XY_DIRECTIONS.forEach((dir) => {
         const nextPos = lastPos.shift(dir, 1)
         if (grid.hasCell(nextPos) && grid.getCell(nextPos) !== Cell.WALL) {
           queue.push([...path, nextPos])

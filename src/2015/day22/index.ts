@@ -1,5 +1,6 @@
 import { cloneDeep } from 'lodash'
 import { readFile } from '../../utils/io'
+import { DaySolution } from '../../utils/type'
 
 interface Stats {
   playerHp: number
@@ -128,14 +129,16 @@ function bossTurn(prevStats: Stats, hard: boolean = false): number {
   return playerTurn(stats, hard)
 }
 
-export default async function () {
-  const input = await readFile('./src/2015/day22/input.txt').then((text) => text.trim())
+export default async function (inputFile: string): Promise<DaySolution> {
+  const input = await readFile(inputFile).then((text) => text.trim())
   const [line1, line2] = input.split('\n')
   const match1 = line1.match(/Hit Points: (\d+)/)
   const match2 = line2.match(/Damage: (\d+)/)
   if (match1 === null || match2 === null) throw new Error('invalid input')
   const bossHp = parseInt(match1[1])
   const bossDamage = parseInt(match2[1])
+
+  const t0 = performance.now()
 
   const initialStats: Stats = {
     playerHp: 50,
@@ -147,10 +150,12 @@ export default async function () {
   }
 
   const minMana = playerTurn(initialStats, false)
-  console.log('Part 1:', minMana)
 
   memo.clear()
 
   const minManaHard = playerTurn(initialStats, true)
-  console.log('Part 2:', minManaHard)
+
+  const t1 = performance.now()
+
+  return [minMana, minManaHard, t1 - t0]
 }

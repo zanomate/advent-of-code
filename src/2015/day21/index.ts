@@ -1,4 +1,5 @@
 import { readFile } from '../../utils/io'
+import { DaySolution } from '../../utils/type'
 
 interface Entity {
   hp: number
@@ -72,8 +73,8 @@ function fight(player: Entity, boss: Entity): boolean {
   return bossHp <= 0
 }
 
-export default async function () {
-  const input = await readFile('./src/2015/day21/input.txt').then((text) => text.trim())
+export default async function (inputFile: string): Promise<DaySolution> {
+  const input = await readFile(inputFile).then((text) => text.trim())
   const [line1, line2, line3] = input.split('\n')
   const match1 = line1.match(/Hit Points: (\d+)/)
   const match2 = line2.match(/Damage: (\d+)/)
@@ -83,6 +84,8 @@ export default async function () {
   const damage = parseInt(match2[1])
   const armor = parseInt(match3[1])
   const boss: Entity = { hp, damage, armor }
+
+  const t0 = performance.now()
 
   const weaponIndexes = Object.keys(WEAPONS).map((k) => parseInt(k))
   const armorIndexes = Object.keys(ARMORS).map((k) => parseInt(k))
@@ -111,6 +114,7 @@ export default async function () {
     else maxGolds = Math.max(maxGolds, golds)
   })
 
-  console.log('Part 1:', minGolds)
-  console.log('Part 2:', maxGolds)
+  const t1 = performance.now()
+
+  return [minGolds, maxGolds, t1 - t0]
 }

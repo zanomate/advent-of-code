@@ -1,24 +1,20 @@
 import { readFile } from '../../utils/io'
-import md5 from 'md5'
+import { DaySolution } from '../../utils/type'
 
-export default async function () {
-  const input = await readFile('./src/2015/day4/input.txt').then((text) => text.trim())
+export default async function (inputFile: string): Promise<DaySolution> {
+  const input = await readFile(inputFile).then((text) => text.trim())
+  const strings: string[] = input.split('\n')
 
-  let i = 0
-  let index_1: number | null = null
-  let index_2: number | null = null
-  while (index_1 === null || index_2 === null) {
-    const key = `${input}${i}`
-    const hash = md5(key)
-    if (index_1 === null && hash.startsWith('00000')) {
-      index_1 = i
-    }
-    if (index_2 === null && hash.startsWith('000000')) {
-      index_2 = i
-    }
-    i++
-  }
+  const t0 = performance.now()
 
-  console.log('Part 1:', index_1)
-  console.log('Part 2:', index_2)
+  let part1 = 0
+  let part2 = 0
+  strings.forEach((str) => {
+    if (!str.match(/(ab|cd|pq|xy)/) && str.match(/[aeiou].*[aeiou].*[aeiou]/) && str.match(/(.)\1/)) part1++
+    if (str.match(/(.{2}).*\1/) && str.match(/(.).\1/)) part2++
+  })
+
+  const t1 = performance.now()
+
+  return [part1, part2, t1 - t0]
 }

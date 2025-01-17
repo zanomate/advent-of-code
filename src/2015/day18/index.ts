@@ -1,5 +1,6 @@
 import { cloneDeep } from 'lodash'
 import { readFile } from '../../utils/io'
+import { DaySolution } from '../../utils/type'
 
 type Grid = boolean[][]
 type Pos = [number, number]
@@ -15,9 +16,11 @@ const POS_SHIFTS: Pos[] = [
   [1, 1],
 ]
 
-export default async function () {
-  const input = await readFile('./src/2015/day18/input.txt').then((text) => text.trim())
+export default async function (inputFile: string): Promise<DaySolution> {
+  const input = await readFile(inputFile).then((text) => text.trim())
   const grid: Grid = input.split('\n').map((line) => line.split('').map((cell) => cell === '#'))
+
+  const t0 = performance.now()
 
   const iterations = 100
 
@@ -63,7 +66,6 @@ export default async function () {
   }
 
   const part1 = count(current)
-  console.log('Part 1:', part1)
 
   current = cloneDeep(grid)
   turnCornersOn(current)
@@ -74,5 +76,8 @@ export default async function () {
   }
 
   const part2 = count(current)
-  console.log('Part 2:', part2)
+
+  const t1 = performance.now()
+
+  return [part1, part2, t1 - t0]
 }

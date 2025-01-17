@@ -1,4 +1,5 @@
 import { readFile } from '../../utils/io'
+import { DaySolution } from '../../utils/type'
 
 function exec(lines: string[], a: number, b: number): number {
   let cursor = 0
@@ -52,13 +53,16 @@ function exec(lines: string[], a: number, b: number): number {
   return b
 }
 
-export default async function () {
-  const input = await readFile('./src/2015/day23/input.txt').then((text) => text.trim())
+export default async function (inputFile: string): Promise<DaySolution> {
+  const input = await readFile(inputFile).then((text) => text.trim())
   const lines = input.split('\n')
 
-  const part1 = exec(lines, 0, 0)
-  console.log('Part 1:', part1)
+  const t0 = performance.now()
 
+  const part1 = exec(lines, 0, 0)
   const part2 = exec(lines, 1, 0)
-  console.log('Part 1:', part2)
+
+  const t1 = performance.now()
+
+  return [part1, part2, t1 - t0]
 }

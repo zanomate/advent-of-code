@@ -1,7 +1,10 @@
 import { readFile } from '../../utils/io'
+import { DaySolution } from '../../utils/type'
 
-export default async function () {
-  const input = await readFile('./src/2015/day10/input.txt').then((text) => text.trim())
+export default async function (inputFile: string): Promise<DaySolution> {
+  const input = await readFile(inputFile).then((text) => text.trim())
+
+  const t0 = performance.now()
 
   const lookAndSay = (input: string): string => {
     let i = 0
@@ -23,6 +26,10 @@ export default async function () {
     res2 = lookAndSay(res2)
   }
 
-  console.log('Part 1:', res1.length)
-  console.log('Part 2:', res2.length)
+  const part1 = res1.length
+  const part2 = res2.length
+
+  const t1 = performance.now()
+
+  return [part1, part2, t1 - t0]
 }

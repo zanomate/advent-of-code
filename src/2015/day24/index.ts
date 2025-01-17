@@ -1,4 +1,5 @@
 import { readFile } from '../../utils/io'
+import { DaySolution } from '../../utils/type'
 
 type Group = number[]
 
@@ -35,12 +36,14 @@ function getGroups(packages: number[], weight: number, len: number): [number, Gr
   return [maxLen, groups]
 }
 
-export default async function () {
-  const input = await readFile('./src/2015/day24/input.txt').then((text) => text.trim())
+export default async function (inputFile: string): Promise<DaySolution> {
+  const input = await readFile(inputFile).then((text) => text.trim())
   const packages: number[] = input
     .split('\n')
     .map((str) => parseInt(str))
     .reverse()
+
+  const t0 = performance.now()
 
   const totalWeight = packages.reduce((tot, pkg) => tot + pkg, 0)
 
@@ -53,8 +56,6 @@ export default async function () {
     if (lowestQEPt1 > qe) lowestQEPt1 = qe
   })
 
-  console.log('Part 1:', lowestQEPt1)
-
   const groupWeightPt2 = totalWeight / 4
   const [, groupsPt2] = getGroups(packages, groupWeightPt2, Infinity)
 
@@ -64,5 +65,7 @@ export default async function () {
     if (lowestQEPt2 > qe) lowestQEPt2 = qe
   })
 
-  console.log('Part 2:', lowestQEPt2)
+  const t1 = performance.now()
+
+  return [lowestQEPt1, lowestQEPt2, t1 - t0]
 }

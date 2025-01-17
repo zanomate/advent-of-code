@@ -1,5 +1,10 @@
 import { Pos } from './Pos'
 
+/**
+ * This is a 2D grid class.
+ * Rows are indexed by y, starting from the top.
+ * Columns are indexed by x, starting from the left.
+ */
 export class Grid<T> {
   width: number
   height: number
@@ -64,7 +69,7 @@ export class Grid<T> {
     return res
   }
 
-  getAllCells(): T[] {
+  get values(): T[] {
     return this.cells.flat()
   }
 

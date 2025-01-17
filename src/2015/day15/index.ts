@@ -1,4 +1,5 @@
 import { readFile } from '../../utils/io'
+import { DaySolution } from '../../utils/type'
 
 interface Ingredient {
   capacity: number
@@ -23,9 +24,11 @@ function findCombinations(len: number, tot: number): number[][] {
   return results
 }
 
-export default async function () {
-  const input = await readFile('./src/2015/day15/input.txt').then((text) => text.trim())
+export default async function (inputFile: string): Promise<DaySolution> {
+  const input = await readFile(inputFile).then((text) => text.trim())
   const properties = new Map<string, Ingredient>()
+
+  const t0 = performance.now()
 
   input.split('\n').forEach((line) => {
     const match = line.match(propertiesRegex)
@@ -63,6 +66,7 @@ export default async function () {
     if (calories === 500 && bestScore2 < score) bestScore2 = score
   })
 
-  console.log('Part 1:', bestScore1)
-  console.log('Part 2:', bestScore2)
+  const t1 = performance.now()
+
+  return [bestScore1, bestScore2, t1 - t0]
 }

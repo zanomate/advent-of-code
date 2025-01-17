@@ -1,5 +1,5 @@
 import { readFile } from '../../utils/io'
-import { CARDINAL_DIRECTIONS } from '../../utils/space/Dir'
+import { XY_DIRECTIONS } from '../../utils/space/Dir'
 import { Grid } from '../../utils/space/Grid'
 import { Pos } from '../../utils/space/Pos'
 import { DaySolution } from '../../utils/type'
@@ -59,7 +59,7 @@ export default async function (inputFile: string): Promise<DaySolution> {
     visited.add(pos.toString())
     seconds.set(pos.toString(), time)
 
-    for (const dir of CARDINAL_DIRECTIONS) {
+    for (const dir of XY_DIRECTIONS) {
       const newPos = pos.shift(dir, 1)
       if (grid.hasCell(newPos) && grid.getCell(newPos) !== Cell.WALL) {
         queue.push([newPos, time + 1])

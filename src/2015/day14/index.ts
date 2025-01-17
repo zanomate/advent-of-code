@@ -1,4 +1,5 @@
 import { readFile } from '../../utils/io'
+import { DaySolution } from '../../utils/type'
 
 interface Info {
   speed: number
@@ -8,8 +9,10 @@ interface Info {
 
 const SECONDS_LIMIT = 2503
 
-export default async function () {
-  const input = await readFile('./src/2015/day14/input.txt').then((text) => text.trim())
+export default async function (inputFile: string): Promise<DaySolution> {
+  const input = await readFile(inputFile).then((text) => text.trim())
+
+  const t0 = performance.now()
 
   const reindeers: Record<string, { speed: number; duration: number; pause: number }> = {}
   input.split('\n').map((line) => {
@@ -35,8 +38,6 @@ export default async function () {
     if (bestDistance < distance) bestDistance = distance
   })
 
-  console.log('Part 1:', bestDistance)
-
   const names = Object.keys(reindeers)
   const kms = names.reduce<Record<string, number>>((map, name) => ({ ...map, [name]: 0 }), {})
   const scores = names.reduce<Record<string, number>>((map, name) => ({ ...map, [name]: 0 }), {})
@@ -55,5 +56,7 @@ export default async function () {
 
   let highScore = Math.max(...Object.values(scores))
 
-  console.log('Part 2:', highScore)
+  const t1 = performance.now()
+
+  return [bestDistance, highScore, t1 - t0]
 }

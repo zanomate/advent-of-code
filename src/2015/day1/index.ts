@@ -1,8 +1,11 @@
 import { readFile } from '../../utils/io'
+import { DaySolution } from '../../utils/type'
 
-export default async function () {
-  const input = await readFile('./src/2015/day1/input.txt').then((text) => text.trim())
+export default async function (inputFile: string): Promise<DaySolution> {
+  const input = await readFile(inputFile).then((text) => text.trim())
   const chars = input.split('')
+
+  const t0 = performance.now()
 
   let floor = 0
   let negativeFloorIndex: number | null = null
@@ -13,6 +16,10 @@ export default async function () {
     if (negativeFloorIndex === null && floor === -1) negativeFloorIndex = i + 1
   })
 
-  console.log('Part 1:', floor)
-  console.log('Part 2:', negativeFloorIndex)
+  const part1 = floor
+  const part2 = negativeFloorIndex
+
+  const t1 = performance.now()
+
+  return [part1, part2, t1 - t0]
 }

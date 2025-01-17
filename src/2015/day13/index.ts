@@ -1,26 +1,11 @@
 import { readFile } from '../../utils/io'
+import { getPermutations } from '../../utils/math'
+import { DaySolution } from '../../utils/type'
 
-const permutations = <T>(list: T[]): T[][] => {
-  if (list.length === 0) return [[]]
-  if (list.length === 1) return [list]
+export default async function (inputFile: string): Promise<DaySolution> {
+  const input = await readFile(inputFile).then((text) => text.trim())
 
-  const res = []
-
-  for (let i = 0; i < list.length; i++) {
-    const current = list[i]
-    const others = list.toSpliced(i, 1)
-    const othersPermutations = permutations(others)
-
-    for (const permutaion of othersPermutations) {
-      res.push([current, ...permutaion])
-    }
-  }
-
-  return res
-}
-
-export default async function () {
-  const input = await readFile('./src/2015/day13/input.txt').then((text) => text.trim())
+  const t0 = performance.now()
 
   const happy: Record<string, Record<string, number>> = {}
 
@@ -33,7 +18,7 @@ export default async function () {
 
   const names = Object.keys(happy)
   let highScore1 = 0
-  permutations(names).forEach((permutation) => {
+  getPermutations(names).forEach((permutation) => {
     const score = permutation.reduce((tot, name, i) => {
       const prevName = permutation[(names.length + i + -1) % names.length]
       const nextName = permutation[(i + 1) % names.length]
@@ -42,11 +27,9 @@ export default async function () {
     if (score > highScore1) highScore1 = score
   })
 
-  console.log('Part 1:', highScore1)
-
   const namesWithMe = [...names, 'me']
   let highScore2 = 0
-  permutations(namesWithMe).forEach((permutation) => {
+  getPermutations(namesWithMe).forEach((permutation) => {
     const score = permutation.reduce((tot, name, i) => {
       if (name === 'me') return tot
       const prevName = permutation[(namesWithMe.length + i + -1) % namesWithMe.length]
@@ -57,5 +40,8 @@ export default async function () {
     }, 0)
     if (score > highScore2) highScore2 = score
   })
-  console.log('Part 2:', highScore2)
+
+  const t1 = performance.now()
+
+  return [highScore1, highScore2, t1 - t0]
 }
