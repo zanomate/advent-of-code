@@ -18,7 +18,7 @@ export class Area {
   readonly grid: Grid<number> = new Grid(WIDTH, HEIGHT, 0)
 
   increment(pos: Pos): void {
-    this.grid.updateCell(pos, (pos) => pos + 1)
+    this.grid.setCell(pos, (prev) => prev + 1)
   }
 
   count(from: Pos, to: Pos): number {

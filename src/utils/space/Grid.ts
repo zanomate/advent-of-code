@@ -1,3 +1,4 @@
+import { cloneDeep, isFunction } from 'lodash'
 import { Pos } from './Pos'
 
 /**
@@ -51,12 +52,37 @@ export class Grid<T> {
     return null
   }
 
-  setCell(pos: Pos, value: T): void {
-    this.cells[pos.y][pos.x] = value
+  setCell(pos: Pos, valueOrUpdater: T | ((prev: T) => T)): void {
+    if (isFunction(valueOrUpdater)) this.cells[pos.y][pos.x] = valueOrUpdater(this.cells[pos.y][pos.x])
+    this.cells[pos.y][pos.x] = valueOrUpdater as T
   }
 
-  updateCell(pos: Pos, updater: (prev: T) => T): void {
-    this.cells[pos.y][pos.x] = updater(this.cells[pos.y][pos.x])
+  getRow(y: number): T[] {
+    return this.cells[y]
+  }
+
+  getColumn(x: number): T[] {
+    return this.cells.map((row) => row[x])
+  }
+
+  setPortion(topLeft: Pos, bottomRight: Pos, valueOrUpdater: T | ((pos: Pos, prev: T) => T)): void {
+    for (let y = topLeft.y; y < bottomRight.y; y++) {
+      for (let x = topLeft.x; x < bottomRight.x; x++) {
+        const pos = new Pos(x, y)
+        if (isFunction(valueOrUpdater)) this.setCell(pos, (prev) => valueOrUpdater(pos, prev))
+        this.setCell(pos, valueOrUpdater as T)
+      }
+    }
+  }
+
+  findPos(predicate: (cell: T) => boolean): Pos | null {
+    for (let y = 0; y < this.height; y++) {
+      for (let x = 0; x < this.width; x++) {
+        const pos = new Pos(x, y)
+        if (predicate(this.getCell(pos)!)) return pos
+      }
+    }
+    return null
   }
 
   get positions(): Pos[] {
@@ -77,5 +103,16 @@ export class Grid<T> {
     this.cells.forEach((row) => {
       console.log(row.map((cell) => format(cell)).join(''))
     })
+  }
+
+  clone(): Grid<T> {
+    const res = new Grid<T>(this.width, this.height, null as unknown as T)
+    for (let y = 0; y < this.height; y++) {
+      for (let x = 0; x < this.width; x++) {
+        const pos = new Pos(x, y)
+        res.setCell(pos, cloneDeep(this.getCell(pos)!))
+      }
+    }
+    return res
   }
 }

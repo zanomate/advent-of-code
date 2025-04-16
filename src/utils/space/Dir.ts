@@ -55,3 +55,18 @@ export const parseDirFromChar = (char: string): Dir => {
       throw new Error('Invalid char')
   }
 }
+
+export const printCharFromDir = (dir: Dir): string => {
+  switch (dir) {
+    case Dir.UP:
+      return 'U'
+    case Dir.RIGHT:
+      return 'R'
+    case Dir.DOWN:
+      return 'D'
+    case Dir.LEFT:
+      return 'L'
+    default:
+      throw new Error('Invalid dir')
+  }
+}

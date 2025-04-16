@@ -6,18 +6,19 @@ export const resolveDay = async (year: number, day: number, inputFile: string): 
   return solution.default(`./src/${year}/day${day}/${inputFile}.txt`)
 }
 
-const YEAR = 2024
-const DAY = 14
+const YEAR = 2016
+const DAY = 25
+const FILE = 'input'
 
 export const resolve = async () => {
   try {
     console.log(blue(`Year ${YEAR} Day ${DAY}`))
-    const solution = await resolveDay(YEAR, DAY, 'input')
+    const solution = await resolveDay(YEAR, DAY, FILE)
     printSolution(solution)
   } catch (error) {
     if (error instanceof Error) {
       console.error(red(error.message))
-      // console.error(error.stack)
+      console.error(error.stack)
     } else throw error
   }
 }

@@ -13,6 +13,14 @@ export class Pos {
     return this.x === other.x && this.y === other.y
   }
 
+  get isPositive(): boolean {
+    return this.x >= 0 && this.y >= 0
+  }
+
+  isInBounds(fromX: number, fromY: number, toX: number, toY: number): boolean {
+    return this.x >= fromX && this.x < toX && this.y >= fromY && this.y < toY
+  }
+
   shift(dir: Dir | DiagDir, distance: number = 1): Pos {
     switch (dir) {
       case Dir.UP:
