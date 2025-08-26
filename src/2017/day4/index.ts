@@ -5,8 +5,6 @@ export default async function (inputFile: string): Promise<DaySolution> {
   const input = await readFile(inputFile).then((text) => text.trim())
   const lines = input.split('\n')
 
-  let validLines = lines
-
   const t0 = performance.now()
 
   const isPassphraseValid = (passphrase: string) => {
@@ -15,7 +13,7 @@ export default async function (inputFile: string): Promise<DaySolution> {
     return words.length === set.size
   }
 
-  validLines = lines.filter((line) => isPassphraseValid(line))
+  let validLines = lines.filter((line) => isPassphraseValid(line))
   const part1 = validLines.length
 
   const isAnagram = (w1: string, w2: string) => {
@@ -28,7 +26,7 @@ export default async function (inputFile: string): Promise<DaySolution> {
     const words = passphrase.split(' ')
     return words.every((w1, i) => {
       const otherWords = words.slice(i + 1)
-      return otherWords.every((w2, i) => !isAnagram(w1, w2))
+      return otherWords.every((w2) => !isAnagram(w1, w2))
     })
   })
 
