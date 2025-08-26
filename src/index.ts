@@ -7,7 +7,7 @@ export const resolveDay = async (year: number, day: number, inputFile: string): 
 }
 
 const YEAR = 2017
-const DAY = 3
+const DAY = 4
 // const FILE = 'sample'
 const FILE = 'input'
 
