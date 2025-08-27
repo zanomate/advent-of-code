@@ -18,7 +18,7 @@ function resolvePart1(input: string) {
   const list = Array.from({ length: 256 }, (_, i) => i)
   let cursor = 0
   let skipSize = 0
-  lengths.forEach((length, i) => {
+  lengths.forEach((length) => {
     reverse(list, cursor, length)
     cursor += (length + skipSize) % list.length
     skipSize++
