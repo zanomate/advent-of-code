@@ -14,6 +14,16 @@ export enum DiagDir {
   DOWN_RIGHT = '┘',
 }
 
+/** Hexagonal direction */
+export enum HexDir {
+  UP = '^',
+  DOWN = 'v',
+  LEFT_UP = '┌',
+  LEFT_DOWN = '∟',
+  RIGHT_UP = '┐',
+  RIGHT_DOWN = '┘',
+}
+
 export type DirSystem = '+' | 'x' | '8'
 
 export const XY_DIRECTIONS = [Dir.UP, Dir.RIGHT, Dir.DOWN, Dir.LEFT]
