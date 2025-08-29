@@ -15,8 +15,6 @@ export default async function (inputFile: string): Promise<DaySolution> {
     index++
   }
 
-  console.log('Part 1:', password1)
-
   index = 0
   let password2 = '........'
   let found = 0

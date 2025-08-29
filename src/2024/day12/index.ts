@@ -1,5 +1,5 @@
 import { readFile } from '../../utils/io'
-import { XY_DIRECTIONS, Dir } from '../../utils/space/Dir'
+import { Dir, XY_DIRECTIONS } from '../../utils/space/Dir'
 import { Grid } from '../../utils/space/Grid'
 import { Pos } from '../../utils/space/Pos'
 import { DaySolution } from '../../utils/type'
@@ -22,7 +22,7 @@ export class Field {
   readonly grid: Grid<Cell>
 
   constructor(cells: string[][]) {
-    this.grid = Grid.factory(cells.length, cells[0].length, (pos) => ({
+    this.grid = Grid.factory<Cell>(cells.length, cells[0].length, (pos) => ({
       pos,
       plant: cells[pos.y][pos.x],
       sides: {
@@ -85,7 +85,10 @@ export class Field {
       cell.sides[direction] = SideType.EMPTY
       return !neighborCell.visited
     })
-    return [cell, ...directionsToVisit.flatMap((direction) => this.getRegion(cell.pos.shift(direction)))]
+    return [
+      cell,
+      ...directionsToVisit.flatMap((direction) => this.getRegion(cell.pos.shift(direction))),
+    ]
   }
 
   getSides(pos: Pos): number {
@@ -131,7 +134,9 @@ export default async function (inputFile: string): Promise<DaySolution> {
     const firstCell = region[0]
     const area = region.length
     const perimeter = region.reduce((tot, cell) => {
-      const sides = Object.keys(cell.sides).filter((d) => cell.sides[d as Dir] === SideType.FENCE).length
+      const sides = Object.keys(cell.sides).filter(
+        (d) => cell.sides[d as Dir] === SideType.FENCE,
+      ).length
       return tot + sides
     }, 0)
     const sides = field.getSides(firstCell.pos)

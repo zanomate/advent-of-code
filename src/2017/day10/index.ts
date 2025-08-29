@@ -1,6 +1,10 @@
 import { readFile } from '../../utils/io'
 import { DaySolution } from '../../utils/type'
 
+function getOrderedList(length: number): number[] {
+  return Array.from({ length }, (_, i) => i)
+}
+
 function reverse(list: number[], from: number, length: number) {
   if (length > list.length) {
     throw new Error(`length ${length} is invalid`)
@@ -15,7 +19,7 @@ function reverse(list: number[], from: number, length: number) {
 function resolvePart1(input: string) {
   const lengths = input.split(',').map((s) => parseInt(s))
 
-  const list = Array.from({ length: 256 }, (_, i) => i)
+  const list = getOrderedList(256)
   let cursor = 0
   let skipSize = 0
   lengths.forEach((length) => {
@@ -27,13 +31,12 @@ function resolvePart1(input: string) {
   return list[0] * list[1]
 }
 
-function resolvePart2(input: string) {
+export function knotHash(input: string) {
   const lengths = Array.from({ length: input.length }, (_, i) => input.charCodeAt(i))
   lengths.push(17, 31, 73, 47, 23)
 
   // sparse hash
-
-  const list = Array.from({ length: 256 }, (_, i) => i)
+  const list = getOrderedList(256)
   let cursor = 0
   let skipSize = 0
 
@@ -61,7 +64,7 @@ export default async function (inputFile: string): Promise<DaySolution> {
 
   const part1 = resolvePart1(input)
 
-  const part2 = resolvePart2(input)
+  const part2 = knotHash(input)
 
   const t1 = performance.now()
 

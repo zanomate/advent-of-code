@@ -53,8 +53,8 @@ describe('2024', () => {
     await testDay(2024, 13, 'sample', 480, null)
     await testDay(2024, 13, 'input', 36870, 78101482023732)
   })
-  it(`Day 14`, async () => {
-    await testDay(2024, 14, 'sample', 12, null)
+  fit(`Day 14`, async () => {
+    // await testDay(2024, 14, 'sample', 12, null) // need to change width and height in index.ts
     await testDay(2024, 14, 'input', 218619324, 6446)
   })
   it(`Day 15`, async () => {

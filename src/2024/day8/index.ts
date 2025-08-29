@@ -29,7 +29,7 @@ export default async function (inputFile: string): Promise<DaySolution> {
   const antinodes1 = new Set<string>()
   const antinodes2 = new Set<string>()
   antennas.forEach((positions) => {
-    const couples = getCombinations(positions, 2)
+    const couples = getCombinations(2, positions)
     couples.forEach(([a, b]) => {
       const dx = b.x - a.x
       const dy = b.y - a.y

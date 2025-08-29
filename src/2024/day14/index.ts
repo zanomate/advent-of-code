@@ -11,8 +11,8 @@ interface Instruction {
   velY: number
 }
 
-export const WIDTH = 101
-export const HEIGHT = 103
+export const WIDTH = 101 // 11 for sample
+export const HEIGHT = 103 // 7 for sample
 
 export class Area {
   readonly grid: Grid<number> = new Grid(WIDTH, HEIGHT, 0)
@@ -32,10 +32,23 @@ export class Area {
   }
 
   countQuadrants(): number {
-    const ULQuadrant = this.count(new Pos(0, 0), new Pos(Math.floor(WIDTH / 2), Math.floor(HEIGHT / 2)))
-    const URQuadrant = this.count(new Pos(Math.ceil(WIDTH / 2), 0), new Pos(WIDTH, Math.floor(HEIGHT / 2)))
-    const DLQuadrant = this.count(new Pos(0, Math.ceil(HEIGHT / 2)), new Pos(Math.floor(WIDTH / 2), HEIGHT))
-    const DRQuadrant = this.count(new Pos(Math.ceil(WIDTH / 2), Math.ceil(HEIGHT / 2)), new Pos(WIDTH, HEIGHT))
+    const ULQuadrant = this.count(
+      new Pos(0, 0),
+      new Pos(Math.floor(WIDTH / 2), Math.floor(HEIGHT / 2)),
+    )
+    const URQuadrant = this.count(
+      new Pos(Math.ceil(WIDTH / 2), 0),
+      new Pos(WIDTH, Math.floor(HEIGHT / 2)),
+    )
+    const DLQuadrant = this.count(
+      new Pos(0, Math.ceil(HEIGHT / 2)),
+      new Pos(Math.floor(WIDTH / 2), HEIGHT),
+    )
+    const DRQuadrant = this.count(
+      new Pos(Math.ceil(WIDTH / 2), Math.ceil(HEIGHT / 2)),
+      new Pos(WIDTH, HEIGHT),
+    )
+    console.log(ULQuadrant, DRQuadrant, URQuadrant, DLQuadrant)
     return ULQuadrant * DRQuadrant * URQuadrant * DLQuadrant
   }
 

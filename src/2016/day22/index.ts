@@ -60,7 +60,7 @@ export default async function (inputFile: string): Promise<DaySolution> {
     }
   })
 
-  grid.print()
+  // grid.print()
 
   const t1 = performance.now()
 

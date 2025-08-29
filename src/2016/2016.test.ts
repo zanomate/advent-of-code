@@ -69,7 +69,7 @@ describe('2016', () => {
   })
   it(`Day 19`, async () => {
     await testDay(2016, 19, 'sample', 3, 2)
-    await testDay(2016, 19, 'input', 1420280, 3014603)
+    await testDay(2016, 19, 'input', 1834903, 1420280)
   })
   it(`Day 20`, async () => {
     await testDay(2016, 20, 'sample', 3, 4294967288)

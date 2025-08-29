@@ -14,7 +14,9 @@ export class Grid<T> {
   constructor(width: number, height: number, defaultValue: T) {
     this.width = width
     this.height = height
-    this.cells = Array.from({ length: height }, () => Array.from({ length: width }, () => defaultValue))
+    this.cells = Array.from({ length: height }, () =>
+      Array.from({ length: width }, () => defaultValue),
+    )
   }
 
   static fromValues<T>(values: T[][]): Grid<T> {
@@ -53,8 +55,11 @@ export class Grid<T> {
   }
 
   setCell(pos: Pos, valueOrUpdater: T | ((prev: T) => T)): void {
-    if (isFunction(valueOrUpdater)) this.cells[pos.y][pos.x] = valueOrUpdater(this.cells[pos.y][pos.x])
-    this.cells[pos.y][pos.x] = valueOrUpdater as T
+    if (isFunction(valueOrUpdater)) {
+      this.cells[pos.y][pos.x] = valueOrUpdater(this.cells[pos.y][pos.x])
+    } else {
+      this.cells[pos.y][pos.x] = valueOrUpdater as T
+    }
   }
 
   getRow(y: number): T[] {
@@ -70,8 +75,20 @@ export class Grid<T> {
       for (let x = topLeft.x; x < bottomRight.x; x++) {
         const pos = new Pos(x, y)
         if (isFunction(valueOrUpdater)) this.setCell(pos, (prev) => valueOrUpdater(pos, prev))
-        this.setCell(pos, valueOrUpdater as T)
+        else this.setCell(pos, valueOrUpdater as T)
       }
+    }
+  }
+
+  setRow(row: number, values: T[]) {
+    for (let x = 0; x < this.width; x++) {
+      this.setCell(new Pos(x, row), values[x] as T)
+    }
+  }
+
+  setCol(col: number, values: T[]) {
+    for (let y = 0; y < this.height; y++) {
+      this.setCell(new Pos(col, y), values[y] as T)
     }
   }
 
@@ -83,6 +100,14 @@ export class Grid<T> {
       }
     }
     return null
+  }
+
+  get rows(): number[] {
+    return Array.from({ length: this.height }, (_, i) => i)
+  }
+
+  get cols(): number[] {
+    return Array.from({ length: this.width }, (_, i) => i)
   }
 
   get positions(): Pos[] {
