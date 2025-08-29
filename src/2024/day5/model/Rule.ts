@@ -3,7 +3,7 @@ export class Rule {
   after: number
 
   constructor(input: string) {
-    const [before, after] = input.split('|').map(num => parseInt(num))
+    const [before, after] = input.split('|').map((num) => parseInt(num))
     this.before = before
     this.after = after
   }

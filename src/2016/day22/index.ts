@@ -21,7 +21,7 @@ const isPairViable = (n1: DiskCell, n2: DiskCell): boolean =>
 export default async function (inputFile: string): Promise<DaySolution> {
   const input = await readFile(inputFile).then((text) => text.trim())
   const lines = input.split('\n').slice(2)
-  const cells = lines.map((line, i) => {
+  const cells = lines.map((line) => {
     const [name, size, used, avail] = line.split(/\s+/)
     const [, x, y] = name.split('-')
     const pos = new Pos(Number(x.slice(1)), Number(y.slice(1)))

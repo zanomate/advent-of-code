@@ -9,7 +9,8 @@ export default async function (inputFile: string): Promise<DaySolution> {
 
   const t0 = performance.now()
 
-  const nextLetter = (char: string): string => String.fromCharCode(((char.charCodeAt(0) - a + 1) % totalChars) + a)
+  const nextLetter = (char: string): string =>
+    String.fromCharCode(((char.charCodeAt(0) - a + 1) % totalChars) + a)
 
   const nextPsw = (psw: string): string => {
     const chars = psw.split('')

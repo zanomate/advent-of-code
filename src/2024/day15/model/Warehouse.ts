@@ -58,7 +58,8 @@ export class Warehouse {
   }
 
   getBoxKey(pos: Pos): string {
-    if (![Cell.BOX_HEAD, Cell.BOX_TAIL].includes(this.grid.getCell(pos)!)) throw new Error('Not a box')
+    if (![Cell.BOX_HEAD, Cell.BOX_TAIL].includes(this.grid.getCell(pos)!))
+      throw new Error('Not a box')
     let cursor: Pos = pos
     let res: Cell
     while ((res = this.grid.getCell(cursor)!) !== Cell.BOX_HEAD) cursor = cursor.shift(Dir.LEFT)
@@ -67,7 +68,8 @@ export class Warehouse {
 
   moveCell(pos: Pos, dir: Dir) {
     const dest = pos.shift(dir)
-    if (this.grid.getCell(dest) !== Cell.EMPTY) throw new Error(`Cannot move to ${pos.toString()} (non-empty)`)
+    if (this.grid.getCell(dest) !== Cell.EMPTY)
+      throw new Error(`Cannot move to ${pos.toString()} (non-empty)`)
     this.grid.setCell(dest, this.grid.getCell(pos)!)
     this.grid.setCell(pos, Cell.EMPTY)
   }

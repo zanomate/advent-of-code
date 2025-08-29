@@ -22,7 +22,11 @@ export default async function (inputFile: string): Promise<DaySolution> {
     const segments = line.split(/[\[\]]/)
     const outside = segments.filter((_, i) => i % 2 === 0)
     const hypernet = segments.filter((_, i) => i % 2 === 1)
-    if (outside.some((segment) => containsAbba(segment)) && hypernet.every((segment) => !containsAbba(segment))) part1++
+    if (
+      outside.some((segment) => containsAbba(segment)) &&
+      hypernet.every((segment) => !containsAbba(segment))
+    )
+      part1++
 
     if (containsAbaBab(outside, hypernet)) part2++
   }

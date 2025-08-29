@@ -49,11 +49,14 @@ const areItemsOkTogether = (items: Item[]): boolean => {
 
 const isMovePossible = (config: Config, move: Move): boolean => {
   if (move.items.length === 0 || move.items.length > 2) return false
-  if (move.items.some((item) => !isFloorContainingItem(config.floors[config.elevator], item))) return false
+  if (move.items.some((item) => !isFloorContainingItem(config.floors[config.elevator], item)))
+    return false
   if (config.elevator === config.minFloor && move.dir === 'down') return false
   if (config.elevator === config.floors.length - 1 && move.dir === 'up') return false
   const startFloorPrevItems = config.floors[config.elevator].items
-  const startFloorItems = startFloorPrevItems.filter((item) => !move.items.some((i) => isEqual(i, item)))
+  const startFloorItems = startFloorPrevItems.filter(
+    (item) => !move.items.some((i) => isEqual(i, item)),
+  )
   const targetFloorPrevItems = config.floors[config.elevator + (move.dir === 'up' ? 1 : -1)].items
   const targetFloorItems = [...targetFloorPrevItems, ...move.items]
   return areItemsOkTogether(startFloorItems) && areItemsOkTogether(targetFloorItems)
@@ -82,7 +85,9 @@ const getNextConfig = (config: Config, move: Move): Config => {
 }
 
 const isSolved = (config: Config): boolean => {
-  return config.floors.every((floor) => floor.num === config.floors.length - 1 || floor.items.length === 0)
+  return config.floors.every(
+    (floor) => floor.num === config.floors.length - 1 || floor.items.length === 0,
+  )
 }
 
 export default async function (inputFile: string): Promise<DaySolution> {
@@ -110,15 +115,21 @@ export default async function (inputFile: string): Promise<DaySolution> {
   })
 
   const resolve = (config: Config): number => {
-    const elements = Array.from(new Set(config.floors.flatMap((floor) => floor.items.flatMap((i) => i.element))))
+    const elements = Array.from(
+      new Set(config.floors.flatMap((floor) => floor.items.flatMap((i) => i.element))),
+    )
 
     const getHash = (config: Config): string =>
       `${config.elevator}-${JSON.stringify(
         elements
           .map((e) =>
             JSON.stringify([
-              config.floors.findIndex((f) => f.items.some((i) => i.type === 'generator' && i.element === e)),
-              config.floors.findIndex((f) => f.items.some((i) => i.type === 'microchip' && i.element === e)),
+              config.floors.findIndex((f) =>
+                f.items.some((i) => i.type === 'generator' && i.element === e),
+              ),
+              config.floors.findIndex((f) =>
+                f.items.some((i) => i.type === 'microchip' && i.element === e),
+              ),
             ]),
           )
           .sort(),

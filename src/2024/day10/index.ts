@@ -30,7 +30,9 @@ export class Field {
 
 export default async function (inputFile: string): Promise<DaySolution> {
   const input = await readFile(inputFile).then((text) => text.trim())
-  const cells: number[][] = input.split('\n').map((row) => row.split('').map((num) => parseInt(num)))
+  const cells: number[][] = input
+    .split('\n')
+    .map((row) => row.split('').map((num) => parseInt(num)))
   const field = new Field(cells)
 
   const t0 = performance.now()

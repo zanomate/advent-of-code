@@ -27,7 +27,12 @@ export enum HexDir {
 export type DirSystem = '+' | 'x' | '8'
 
 export const XY_DIRECTIONS = [Dir.UP, Dir.RIGHT, Dir.DOWN, Dir.LEFT]
-export const DIAG_DIRECTIONS = [DiagDir.UP_RIGHT, DiagDir.DOWN_RIGHT, DiagDir.DOWN_LEFT, DiagDir.UP_LEFT]
+export const DIAG_DIRECTIONS = [
+  DiagDir.UP_RIGHT,
+  DiagDir.DOWN_RIGHT,
+  DiagDir.DOWN_LEFT,
+  DiagDir.UP_LEFT,
+]
 export const ALL_DIRECTIONS = [
   Dir.UP,
   DiagDir.UP_RIGHT,

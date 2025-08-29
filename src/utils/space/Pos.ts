@@ -59,7 +59,8 @@ export class Pos {
   neighbours(sys: DirSystem = '+', distance: number = 1): Pos[] {
     const res: Pos[] = []
     if (['+', '8'].includes(sys)) res.push(...XY_DIRECTIONS.map((dir) => this.shift(dir, distance)))
-    if (['x', '8'].includes(sys)) res.push(...DIAG_DIRECTIONS.map((dir) => this.shift(dir, distance)))
+    if (['x', '8'].includes(sys))
+      res.push(...DIAG_DIRECTIONS.map((dir) => this.shift(dir, distance)))
     return res
   }
 

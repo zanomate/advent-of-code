@@ -94,7 +94,9 @@ export default async function (inputFile: string): Promise<DaySolution> {
   const endPos = new Pos(grid.width - 2, 1)
   const endCell = grid.getCell(endPos)!
   const minCost = Math.min(...XY_DIRECTIONS.map((dir) => endCell.info[dir].cost))
-  const minCostInfos = XY_DIRECTIONS.map((dir) => endCell.info[dir]).filter((info) => info.cost === minCost)
+  const minCostInfos = XY_DIRECTIONS.map((dir) => endCell.info[dir]).filter(
+    (info) => info.cost === minCost,
+  )
   const allPos = minCostInfos.flatMap((info) => info.path)
 
   const part1 = minCost

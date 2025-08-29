@@ -24,7 +24,9 @@ function blinkIterative(stone: number, iterations: number): number {
   else if (digitCount % 2 === 0) {
     const newStone1 = parseInt(asString.slice(0, digitCount / 2))
     const newStone2 = parseInt(asString.slice(digitCount / 2))
-    res = blinkIterative(newStone1, remainingIterations) + blinkIterative(newStone2, remainingIterations)
+    res =
+      blinkIterative(newStone1, remainingIterations) +
+      blinkIterative(newStone2, remainingIterations)
   }
   // rule 3
   else {

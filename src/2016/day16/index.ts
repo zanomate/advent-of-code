@@ -10,7 +10,10 @@ interface Disc {
 const evolveSequence = (prev: boolean[]) => [...prev, false, ...prev.toReversed().map((v) => !v)]
 
 const computeChecksum = (sequence: boolean[]) => {
-  const pairs = Array.from({ length: sequence.length / 2 }, (_, i) => [sequence[2 * i], sequence[2 * i + 1]])
+  const pairs = Array.from({ length: sequence.length / 2 }, (_, i) => [
+    sequence[2 * i],
+    sequence[2 * i + 1],
+  ])
   const checksum = pairs.map(([a, b]) => a === b)
   if (checksum.length % 2 === 1) return checksum
   return computeChecksum(checksum)

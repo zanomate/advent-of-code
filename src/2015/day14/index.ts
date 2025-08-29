@@ -16,7 +16,9 @@ export default async function (inputFile: string): Promise<DaySolution> {
 
   const reindeers: Record<string, { speed: number; duration: number; pause: number }> = {}
   input.split('\n').map((line) => {
-    const match = line.match(/(\w+) can fly (\d+) km\/s for (\d+) seconds, but then must rest for (\d+) seconds./)
+    const match = line.match(
+      /(\w+) can fly (\d+) km\/s for (\d+) seconds, but then must rest for (\d+) seconds./,
+    )
     if (match === null) throw new Error('invalid line')
     reindeers[match[1]] = {
       speed: parseInt(match[2]),

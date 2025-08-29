@@ -26,7 +26,11 @@ export default async function (inputFile: string): Promise<DaySolution> {
     if ((match = line.match(/value (\d+) goes to bot (\d+)/))) {
       const botId = parseInt(match[2])
       bots.get(botId)!.values.push(parseInt(match[1]))
-    } else if ((match = line.match(/bot (\d+) gives low to (bot|output) (\d+) and high to (bot|output) (\d+)/))) {
+    } else if (
+      (match = line.match(
+        /bot (\d+) gives low to (bot|output) (\d+) and high to (bot|output) (\d+)/,
+      ))
+    ) {
       const botId = parseInt(match[1])
       const low = { type: match[2] as 'bot' | 'output', id: parseInt(match[3]) }
       const high = { type: match[4] as 'bot' | 'output', id: parseInt(match[5]) }

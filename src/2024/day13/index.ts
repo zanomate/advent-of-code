@@ -49,7 +49,9 @@ export default async function (inputFile: string): Promise<DaySolution> {
 
   const part1 = computeMinTokens(machines)
 
-  const part2 = computeMinTokens(machines.map((m) => ({ ...m, X: m.X + 10000000000000, Y: m.Y + 10000000000000 })))
+  const part2 = computeMinTokens(
+    machines.map((m) => ({ ...m, X: m.X + 10000000000000, Y: m.Y + 10000000000000 })),
+  )
 
   const t1 = performance.now()
 

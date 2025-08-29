@@ -26,14 +26,16 @@ export default async function (inputFile: string): Promise<DaySolution> {
       // Lock
       locks.push(
         Array.from({ length: 5 }).map(
-          (_, i) => lines.slice(1).reduce((tot, line) => tot + (line[i] === '#' ? 1 : 0), 0) as number,
+          (_, i) =>
+            lines.slice(1).reduce((tot, line) => tot + (line[i] === '#' ? 1 : 0), 0) as number,
         ) as Lock,
       )
     } else {
       // Key
       keys.push(
         Array.from({ length: 5 }).map(
-          (_, i) => lines.slice(0, -1).reduce((tot, line) => tot + (line[i] === '#' ? 1 : 0), 0) as number,
+          (_, i) =>
+            lines.slice(0, -1).reduce((tot, line) => tot + (line[i] === '#' ? 1 : 0), 0) as number,
         ) as Key,
       )
     }

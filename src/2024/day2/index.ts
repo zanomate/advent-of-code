@@ -16,7 +16,9 @@ function isListSafe(levels: number[]) {
 
 export default async function (inputFile: string): Promise<DaySolution> {
   const input = await readFile(inputFile).then((text) => text.trim())
-  const reports: number[][] = input.split('\n').map((line) => line.split(' ').map((str) => parseInt(str)))
+  const reports: number[][] = input
+    .split('\n')
+    .map((line) => line.split(' ').map((str) => parseInt(str)))
 
   const t0 = performance.now()
 

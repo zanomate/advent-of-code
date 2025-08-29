@@ -47,7 +47,11 @@ function compactFiles(disk: DiskBlock[]): DiskBlock[] {
     const blockLength = blockEnd - blockStart + 1
     const leftmostSpaceStart = findSpace(res, blockLength, 0, blockStart)
     if (leftmostSpaceStart !== null) {
-      const block = res.splice(blockStart, blockLength, ...Array.from({ length: blockLength }, () => null))
+      const block = res.splice(
+        blockStart,
+        blockLength,
+        ...Array.from({ length: blockLength }, () => null),
+      )
       res.splice(leftmostSpaceStart, blockLength, ...block)
     }
   }

@@ -9,7 +9,8 @@ interface Ingredient {
   calories: number
 }
 
-const propertiesRegex = /(\w+): capacity (-?\d+), durability (-?\d+), flavor (-?\d+), texture (-?\d+), calories (-?\d+)/
+const propertiesRegex =
+  /(\w+): capacity (-?\d+), durability (-?\d+), flavor (-?\d+), texture (-?\d+), calories (-?\d+)/
 
 function findCombinations(len: number, tot: number): number[][] {
   const results: number[][] = []
@@ -45,12 +46,20 @@ export default async function (inputFile: string): Promise<DaySolution> {
   const ingredients = Array.from(properties.keys())
 
   const computeScore = (recipe: Record<string, number>): number => {
-    const capacity = ingredients.reduce((tot, i) => tot + properties.get(i)!.capacity * recipe[i], 0)
-    const durability = ingredients.reduce((tot, i) => tot + properties.get(i)!.durability * recipe[i], 0)
+    const capacity = ingredients.reduce(
+      (tot, i) => tot + properties.get(i)!.capacity * recipe[i],
+      0,
+    )
+    const durability = ingredients.reduce(
+      (tot, i) => tot + properties.get(i)!.durability * recipe[i],
+      0,
+    )
     const flavor = ingredients.reduce((tot, i) => tot + properties.get(i)!.flavor * recipe[i], 0)
     const texture = ingredients.reduce((tot, i) => tot + properties.get(i)!.texture * recipe[i], 0)
 
-    return Math.max(0, capacity) * Math.max(0, durability) * Math.max(0, flavor) * Math.max(0, texture)
+    return (
+      Math.max(0, capacity) * Math.max(0, durability) * Math.max(0, flavor) * Math.max(0, texture)
+    )
   }
 
   const computeCalories = (recipe: Record<string, number>): number =>

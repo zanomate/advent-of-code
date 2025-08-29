@@ -10,7 +10,9 @@ export default async function (inputFile: string): Promise<DaySolution> {
   const happy: Record<string, Record<string, number>> = {}
 
   input.split('\n').forEach((line) => {
-    const match = line.match(/(\w+) would (gain|lose) (\d+) happiness units by sitting next to (\w+)./)
+    const match = line.match(
+      /(\w+) would (gain|lose) (\d+) happiness units by sitting next to (\w+)./,
+    )
     if (match === null) throw new Error('invalid line')
     if (happy[match[1]] === undefined) happy[match[1]] = {}
     happy[match[1]][match[4]] = (match[2] === 'gain' ? 1 : -1) * parseInt(match[3])

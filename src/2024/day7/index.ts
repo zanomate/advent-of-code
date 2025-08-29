@@ -20,7 +20,11 @@ function findSolution(result: number, values: number[], enableConcat: boolean): 
   const tryMul = findSolution(result, [firstValue * secondValue, ...remainingValues], enableConcat)
   if (tryMul != null) return result
   if (enableConcat) {
-    const tryConcat = findSolution(result, [parseInt(`${firstValue}${secondValue}`), ...remainingValues], enableConcat)
+    const tryConcat = findSolution(
+      result,
+      [parseInt(`${firstValue}${secondValue}`), ...remainingValues],
+      enableConcat,
+    )
     if (tryConcat != null) return result
   }
   return null

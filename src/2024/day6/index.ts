@@ -39,7 +39,12 @@ export class Field {
     }
     const nextCell = this.grid.getCell(nextPos)
     // if it reached an already-visited cell
-    if (nextCell === Dir.UP || nextCell === Dir.DOWN || nextCell === Dir.LEFT || nextCell === Dir.RIGHT) {
+    if (
+      nextCell === Dir.UP ||
+      nextCell === Dir.DOWN ||
+      nextCell === Dir.LEFT ||
+      nextCell === Dir.RIGHT
+    ) {
       if (nextCell === this.guardDir) throw new Error('Loop')
       this.grid.setCell(nextPos, this.guardDir)
       this.guardPos = nextPos

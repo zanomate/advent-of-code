@@ -7,8 +7,12 @@ export default async function (inputFile: string): Promise<DaySolution> {
 
   const t0 = performance.now()
 
-  const grid1: boolean[][] = Array.from({ length: 1000 }, () => Array.from({ length: 1000 }, () => false))
-  const grid2: number[][] = Array.from({ length: 1000 }, () => Array.from({ length: 1000 }, () => 0))
+  const grid1: boolean[][] = Array.from({ length: 1000 }, () =>
+    Array.from({ length: 1000 }, () => false),
+  )
+  const grid2: number[][] = Array.from({ length: 1000 }, () =>
+    Array.from({ length: 1000 }, () => 0),
+  )
 
   const updateGrid1 = (
     startX: number,

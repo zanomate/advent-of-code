@@ -28,7 +28,11 @@ export default async function (inputFile: string): Promise<DaySolution> {
       for (let n3 of nodes) {
         if (n1 === n3 || n2 === n3) continue
         if (!n1.startsWith('t') && !n2.startsWith('t') && !n3.startsWith('t')) continue
-        if (nodeConnections.get(n1)!.has(n2) && nodeConnections.get(n2)!.has(n3) && nodeConnections.get(n3)!.has(n1)) {
+        if (
+          nodeConnections.get(n1)!.has(n2) &&
+          nodeConnections.get(n2)!.has(n3) &&
+          nodeConnections.get(n3)!.has(n1)
+        ) {
           clusters.add([n1, n2, n3].sort().join('-'))
         }
       }

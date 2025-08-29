@@ -64,7 +64,11 @@ export default async function (inputFile: string): Promise<DaySolution> {
 
   const findShortestPath = (start: number, ...rest: number[]): number => {
     if (rest.length === 0) return 0
-    return Math.min(...rest.map((next, i) => distances[start][next] + findShortestPath(next, ...rest.toSpliced(i, 1))))
+    return Math.min(
+      ...rest.map(
+        (next, i) => distances[start][next] + findShortestPath(next, ...rest.toSpliced(i, 1)),
+      ),
+    )
   }
 
   const [start, ...rest] = nodes.map((_, i) => i)
@@ -74,7 +78,9 @@ export default async function (inputFile: string): Promise<DaySolution> {
   const findShortestPath2 = (start: number, middle: number[], end: number): number => {
     if (middle.length === 0) return distances[start][end]
     return Math.min(
-      ...middle.map((next, i) => distances[start][next] + findShortestPath2(next, middle.toSpliced(i, 1), end)),
+      ...middle.map(
+        (next, i) => distances[start][next] + findShortestPath2(next, middle.toSpliced(i, 1), end),
+      ),
     )
   }
 

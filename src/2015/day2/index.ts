@@ -3,7 +3,9 @@ import { DaySolution } from '../../utils/type'
 
 export default async function (inputFile: string): Promise<DaySolution> {
   const input = await readFile(inputFile).then((text) => text.trim())
-  const presents: number[][] = input.split('\n').map((line) => line.split('x').map((str) => parseInt(str)))
+  const presents: number[][] = input
+    .split('\n')
+    .map((line) => line.split('x').map((str) => parseInt(str)))
 
   const t0 = performance.now()
 

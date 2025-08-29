@@ -10,7 +10,8 @@ export default async function (inputFile: string): Promise<DaySolution> {
   let part1 = 0
   let part2 = 0
   strings.forEach((str) => {
-    if (!str.match(/(ab|cd|pq|xy)/) && str.match(/[aeiou].*[aeiou].*[aeiou]/) && str.match(/(.)\1/)) part1++
+    if (!str.match(/(ab|cd|pq|xy)/) && str.match(/[aeiou].*[aeiou].*[aeiou]/) && str.match(/(.)\1/))
+      part1++
     if (str.match(/(.{2}).*\1/) && str.match(/(.).\1/)) part2++
   })
 

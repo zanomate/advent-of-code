@@ -7,10 +7,16 @@ export default async function (inputFile: string): Promise<DaySolution> {
 
   const t0 = performance.now()
 
-  const part1 = nums.reduce((tot, num, idx) => tot + (num === nums[(idx + 1) % nums.length] ? num : 0), 0)
+  const part1 = nums.reduce(
+    (tot, num, idx) => tot + (num === nums[(idx + 1) % nums.length] ? num : 0),
+    0,
+  )
 
   const halfLen = nums.length / 2
-  const part2 = nums.reduce((tot, num, idx) => tot + (num === nums[(idx + halfLen) % nums.length] ? num : 0), 0)
+  const part2 = nums.reduce(
+    (tot, num, idx) => tot + (num === nums[(idx + halfLen) % nums.length] ? num : 0),
+    0,
+  )
 
   const t1 = performance.now()
 
