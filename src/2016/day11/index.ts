@@ -147,8 +147,8 @@ export default async function (inputFile: string): Promise<DaySolution> {
 
       if (isSolved(current)) return current.moves
 
-      const combinations2Items = getCombinations(current.floors[current.elevator].items, 2)
-      const combinations1Item = getCombinations(current.floors[current.elevator].items, 1)
+      const combinations2Items = getCombinations(2, current.floors[current.elevator].items)
+      const combinations1Item = getCombinations(1, current.floors[current.elevator].items)
 
       const possibleMoves: Move[] = [
         ...combinations2Items.map<Move>((items) => ({ dir: 'up', items })),
@@ -157,7 +157,7 @@ export default async function (inputFile: string): Promise<DaySolution> {
         ...combinations2Items.map<Move>((items) => ({ dir: 'down', items })),
       ].filter((move) => isMovePossible(current, move))
 
-      possibleMoves.forEach((move, i) => {
+      possibleMoves.forEach((move) => {
         queue.push(getNextConfig(current, move))
       })
     }

@@ -2,11 +2,6 @@ import { bitsToString, stringToBits } from '../../utils/boolean'
 import { readFile } from '../../utils/io'
 import { DaySolution } from '../../utils/type'
 
-interface Disc {
-  positions: number
-  start: number
-}
-
 const evolveSequence = (prev: boolean[]) => [...prev, false, ...prev.toReversed().map((v) => !v)]
 
 const computeChecksum = (sequence: boolean[]) => {

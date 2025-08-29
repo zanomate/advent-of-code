@@ -1,7 +1,4 @@
 import { readFile } from '../../utils/io'
-import { getCombinations } from '../../utils/math'
-import { Grid } from '../../utils/space/Grid'
-import { Pos } from '../../utils/space/Pos'
 import { DaySolution } from '../../utils/type'
 
 interface Equation {

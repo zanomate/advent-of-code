@@ -35,8 +35,7 @@ export default async function (inputFile: string): Promise<DaySolution> {
   const checkValidity = (psw: string): boolean => {
     if (illegalChars.some((illegalChar) => psw.includes(illegalChar))) return false
     if (sequences.every((sequence) => !psw.includes(sequence))) return false
-    if (!psw.match(/(.)\1.*(.)\2/)) return false
-    return true
+    return !!psw.match(/(.)\1.*(.)\2/)
   }
 
   let part1 = input

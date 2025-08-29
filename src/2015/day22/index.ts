@@ -48,9 +48,9 @@ function getAvailableMagics(stats: Stats): Magic[] {
   const effectsTypes = stats.playerEffects.map((e) => e.type)
   return MAGICS.filter((m) => {
     if (m.cost > stats.playerMana) return false
-    if (m.lastingEffects?.length && m.lastingEffects.some((e) => effectsTypes.includes(e.type)))
-      return false
-    return true
+    return !(
+      m.lastingEffects?.length && m.lastingEffects.some((e) => effectsTypes.includes(e.type))
+    )
   })
 }
 

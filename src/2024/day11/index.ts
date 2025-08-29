@@ -10,7 +10,7 @@ function blinkIterative(stone: number, iterations: number): number {
   if (memoizedCounts.has(memoKey)) {
     return memoizedCounts.get(memoKey) as number
   }
-  let res = 0
+  let res
 
   const remainingIterations = iterations - 1
   const asString = String(stone)
