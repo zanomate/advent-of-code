@@ -1,9 +1,9 @@
-export type BasicMemory = Record<string, number>
+export type BasicMemory = Record<string, any>
 
 export interface InstructionSpec<Memory = BasicMemory> {
   name: string
   match: RegExp
-  fn: (args: string[], env: ExecutionEnv<Memory>) => ExecutionEnv<Memory>
+  fn: (args: string[], env: ExecutionEnv<Memory>) => void
 }
 
 export interface Instruction {
@@ -13,11 +13,50 @@ export interface Instruction {
 
 export type Program = Instruction[]
 
-export interface ExecutionEnv<Memory = BasicMemory> {
-  program: Program
-  cursor: number
+export class ExecutionEnv<Memory = BasicMemory> {
+  private readonly specs: Record<string, InstructionSpec<Memory>> = {}
+  private readonly program: Program
+
   memory: Memory
-  out: string[]
+  out: string[] = []
+
+  private _running: boolean = false
+  private _cursor: number = 0
+
+  constructor(specs: Record<string, InstructionSpec<Memory>>, program: Program, memory: Memory) {
+    this.specs = specs
+    this.program = program
+    this.memory = memory
+  }
+
+  get running() {
+    return this._running
+  }
+
+  run() {
+    this._running = true
+    while (this.running && this.cursor < this.program.length) {
+      const instruction = this.program[this.cursor]
+      const spec = this.specs[instruction.name]
+      spec.fn(instruction.args, this)
+    }
+  }
+
+  halt() {
+    this._running = false
+  }
+
+  get cursor() {
+    return this._cursor
+  }
+
+  moveCursor(lines: number = 1) {
+    this._cursor += lines
+  }
+
+  print(output: any) {
+    this.out.push(String(output))
+  }
 }
 
 export class Computer<Memory = BasicMemory> {
@@ -46,23 +85,21 @@ export class Computer<Memory = BasicMemory> {
     return lines.map((line) => this.parseInstruction(line)) as Program
   }
 
-  run(program: string[], initialMemory: Memory): ExecutionEnv<Memory> {
-    let env: ExecutionEnv<Memory> = {
-      program: this.parseProgram(program),
-      cursor: 0,
-      memory: initialMemory,
-      out: [],
-    }
-    while (env.cursor < env.program.length) {
-      const instruction = env.program[env.cursor]
-      debugger
-      const spec = this.specs[instruction.name]
-      env = spec.fn(instruction.args, env)
-    }
-    return env
+  load(program: string[], initialMemory: Memory): ExecutionEnv<Memory> {
+    const parsedProgram = this.parseProgram(program)
+    return new ExecutionEnv(this.specs, parsedProgram, initialMemory)
   }
 }
 
 export const isRegistry = (value: string): boolean => /^[a-z]$/.test(value)
 
 export const isValue = (value: string): boolean => /^[+-]?[0-9]+$/.test(value)
+
+export const getParameterValue = <Memory extends BasicMemory = BasicMemory>(
+  parameter: string,
+  memory: Memory,
+) => {
+  if (isValue(parameter)) return Number(parameter)
+  if (isRegistry(parameter) && parameter in memory) return memory[parameter]
+  return null
+}

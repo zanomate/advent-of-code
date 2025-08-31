@@ -13,11 +13,11 @@ const computer = new Computer([
     match: /out (.+)/,
     fn: ([src], env) => {
       const value = isRegistry(src) ? env.memory[src].toString() : src
-      const lastOut = last(env.out)
+      const lastOut = last(env.print)
       if (lastOut !== undefined && lastOut === value) throw new Error()
-      env.out.push(value)
+      env.print.push(value)
       env.cursor++
-      if (env.out.length > THRESHOLD) env.cursor = env.program.length
+      if (env.print.length > THRESHOLD) env.cursor = env.program.length
       return env
     },
   },

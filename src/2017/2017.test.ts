@@ -53,4 +53,16 @@ describe('2017', () => {
     await testDay(2017, 14, 'sample', 8108, 1242)
     await testDay(2017, 14, 'input', 8074, 1212)
   })
+  it(`Day 15`, async () => {
+    await testDay(2017, 15, 'sample', 588, 309)
+    await testDay(2017, 15, 'input', 600, 313)
+  })
+  it(`Day 16`, async () => {
+    // await testDay(2017, 16, 'sample', 'baedc', null) // need to change DANCERS_COUNT to 5 in index.ts
+    await testDay(2017, 16, 'input', 'ionlbkfeajgdmphc', 'fdnphiegakolcmjb')
+  })
+  it(`Day 17`, async () => {
+    await testDay(2017, 16, 'sample', 638, null)
+    await testDay(2017, 16, 'input', 1306, 20430489)
+  })
 })

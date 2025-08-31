@@ -11,9 +11,9 @@ export const resolveDay = async (
 }
 
 const YEAR = 2017
-const DAY = 14
-const FILE = 'sample'
-// const FILE = 'input'
+const DAY = 18
+// const FILE = 'sample2'
+const FILE = 'input'
 
 export const resolve = async () => {
   try {
