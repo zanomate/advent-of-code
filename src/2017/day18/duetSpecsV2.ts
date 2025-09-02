@@ -20,7 +20,7 @@ export const duetSpecsV2: InstructionSpec<DuetMemory>[] = [
     name: 'recover',
     match: /rcv (.+)/,
     fn: ([param], env) => {
-      if (env.memory.queueIn.length) {
+      if (env.memory.queueIn.length > 0) {
         env.memory[param] = env.memory.queueIn.shift()!
         env.moveCursor()
       } else {
@@ -64,7 +64,7 @@ export const duetSpecsV2: InstructionSpec<DuetMemory>[] = [
     name: 'jump',
     match: /jgz (.+) (.+)/,
     fn: ([param1, param2], env) => {
-      if (env.memory[param1]) {
+      if (getParameterValue(param1, env.memory) > 0) {
         env.moveCursor(getParameterValue(param2, env.memory) || 0)
       } else {
         env.moveCursor()

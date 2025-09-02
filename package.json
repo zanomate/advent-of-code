@@ -2,7 +2,7 @@
   "name": "advent15",
   "version": "1.0.0",
   "scripts": {
-    "start": "tsx -e \"import('src/index.ts').then(m => m.resolve())\"",
+    "start": "tsx -e \"import('src/index.ts').then(m => m.default.resolve())\"",
     "test": "jest"
   },
   "author": "",

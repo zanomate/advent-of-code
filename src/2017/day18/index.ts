@@ -18,23 +18,21 @@ export default async function (inputFile: string): Promise<DaySolution> {
 
   const part1 = execution.out[0]
 
-  const exec1 = v2.load(program, { queueIn: [], queueOut: [], p: 0, name: 'A' })
-  const exec2 = v2.load(program, { queueIn: [], queueOut: [], p: 1, name: 'B' })
+  const queueA: number[] = []
+  const queueB: number[] = []
 
-  exec1.run()
-  exec2.run()
+  const execA = v2.load(program, { p: 0, queueIn: queueA, queueOut: queueB })
+  const execB = v2.load(program, { p: 1, queueIn: queueB, queueOut: queueA })
 
-  // while (exec1.memory.queueOut.length || exec2.memory.queueOut.length) {
-  //   console.log(exec1.memory.queueOut.length, exec2.memory.queueOut.length)
-  //   exec1.memory.queueIn.push(...exec2.memory.queueOut)
-  //   exec2.memory.queueOut = []
-  //   exec2.memory.queueIn.push(...exec1.memory.queueOut)
-  //   exec1.memory.queueOut = []
-  //   exec1.run()
-  //   exec2.run()
-  // }
+  execA.run()
+  execB.run()
 
-  const part2 = exec1.memory.sendCount
+  while (queueA.length || queueB.length) {
+    execA.run()
+    execB.run()
+  }
+
+  const part2 = execB.memory.sendCount
 
   const t1 = performance.now()
 
