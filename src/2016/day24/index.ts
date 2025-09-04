@@ -1,6 +1,6 @@
 import { readFile } from '../../utils/io'
 import { Grid } from '../../utils/space/Grid'
-import { p, Pos } from '../../utils/space/Pos'
+import { Pos } from '../../utils/space/Pos'
 import { DaySolution } from '../../utils/type'
 
 type CellType = '#' | '.' | string

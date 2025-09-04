@@ -2,7 +2,7 @@ import { cloneDeep } from 'lodash'
 import { readFile } from '../../utils/io'
 import { Dir, turnRight } from '../../utils/space/Dir'
 import { Grid } from '../../utils/space/Grid'
-import { p, Pos } from '../../utils/space/Pos'
+import { Pos } from '../../utils/space/Pos'
 import { DaySolution } from '../../utils/type'
 
 export enum Cell {

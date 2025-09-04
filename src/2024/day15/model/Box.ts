@@ -1,5 +1,5 @@
 import { Dir } from '../../../utils/space/Dir'
-import { p, Pos } from '../../../utils/space/Pos'
+import { Pos } from '../../../utils/space/Pos'
 
 export class Box {
   private pos: Pos
