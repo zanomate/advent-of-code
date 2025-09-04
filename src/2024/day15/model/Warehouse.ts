@@ -1,6 +1,6 @@
 import { Dir } from '../../../utils/space/Dir'
 import { Grid } from '../../../utils/space/Grid'
-import { Pos } from '../../../utils/space/Pos'
+import { p, Pos } from '../../../utils/space/Pos'
 import { Box } from './Box'
 import { Robot } from './Robot'
 
@@ -27,10 +27,10 @@ export class Warehouse {
 
   constructor(cells: InputCell[][], wideFactor: number) {
     this.wideFactor = wideFactor
-    let robot = new Robot(new Pos(0, 0))
+    let robot = new Robot(p(0, 0))
     const h = cells.length
     const w = cells[0].length * wideFactor
-    this.grid = Grid.factory(w, h, (pos) => {
+    this.grid = new Grid(w, h, (pos) => {
       const dx = pos.x % wideFactor
       const x = Math.floor(pos.x / wideFactor)
       const cell = cells[pos.y][x]
@@ -150,7 +150,7 @@ export class Warehouse {
     for (let y = 0; y < this.grid.height; y++) {
       let row = ''
       for (let x = 0; x < this.grid.width; x++) {
-        row += this.grid.getCell(new Pos(x, y))
+        row += this.grid.getCell(p(x, y))
       }
       console.log(row)
     }
@@ -160,7 +160,7 @@ export class Warehouse {
     let tot = 0
     for (let y = 0; y < this.grid.height; y++) {
       for (let x = 0; x < this.grid.width; x++) {
-        if (this.grid.getCell(new Pos(x, y)) === Cell.BOX_HEAD) {
+        if (this.grid.getCell(p(x, y)) === Cell.BOX_HEAD) {
           tot += 100 * y + x
         }
       }

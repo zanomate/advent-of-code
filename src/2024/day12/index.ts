@@ -1,7 +1,7 @@
 import { readFile } from '../../utils/io'
 import { Dir, XY_DIRECTIONS } from '../../utils/space/Dir'
 import { Grid } from '../../utils/space/Grid'
-import { Pos } from '../../utils/space/Pos'
+import { p, Pos } from '../../utils/space/Pos'
 import { DaySolution } from '../../utils/type'
 
 export enum SideType {
@@ -22,7 +22,7 @@ export class Field {
   readonly grid: Grid<Cell>
 
   constructor(cells: string[][]) {
-    this.grid = Grid.factory<Cell>(cells.length, cells[0].length, (pos) => ({
+    this.grid = new Grid<Cell>(cells.length, cells[0].length, (pos) => ({
       pos,
       plant: cells[pos.y][pos.x],
       sides: {
@@ -121,7 +121,7 @@ export default async function (inputFile: string): Promise<DaySolution> {
   let regions: Cell[][] = []
   for (let y = 0; y < cells.length; y++) {
     for (let x = 0; x < cells[y].length; x++) {
-      const pos = new Pos(x, y)
+      const pos = p(x, y)
       if (!field.isCellVisited(pos)) {
         regions.push(field.getRegion(pos))
       }

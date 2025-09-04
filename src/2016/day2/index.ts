@@ -1,7 +1,7 @@
 import { readFile } from '../../utils/io'
 import { parseDirFromChar } from '../../utils/space/Dir'
 import { Grid } from '../../utils/space/Grid'
-import { Pos } from '../../utils/space/Pos'
+import { p } from '../../utils/space/Pos'
 import { DaySolution } from '../../utils/type'
 
 export default async function (inputFile: string): Promise<DaySolution> {
@@ -17,7 +17,7 @@ export default async function (inputFile: string): Promise<DaySolution> {
   ]
   const keypad1 = Grid.fromValues(keypad1Values)
 
-  let pos = new Pos(1, 1)
+  let pos = p(1, 1)
   let digits1: string[] = []
   lines.forEach((line) => {
     const dirList = line.split('')
@@ -38,7 +38,7 @@ export default async function (inputFile: string): Promise<DaySolution> {
   ]
   const keypad2 = Grid.fromValues(keypad2Values)
 
-  pos = new Pos(0, 2)
+  pos = p(0, 2)
   const digits2: string[] = []
   lines.forEach((line) => {
     const dirList = line.split('')

@@ -2,7 +2,7 @@ import { cloneDeep } from 'lodash'
 import { readFile } from '../../utils/io'
 import { Dir, turnRight } from '../../utils/space/Dir'
 import { Grid } from '../../utils/space/Grid'
-import { Pos } from '../../utils/space/Pos'
+import { p, Pos } from '../../utils/space/Pos'
 import { DaySolution } from '../../utils/type'
 
 export enum Cell {
@@ -18,7 +18,7 @@ export class Field {
   constructor(cells: (Cell | Dir)[][]) {
     const w = cells[0].length
     const h = cells.length
-    this.grid = Grid.factory(w, h, (pos) => {
+    this.grid = new Grid(w, h, (pos) => {
       const cell = cells[pos.y][pos.x]
       if (cell === Dir.UP) {
         this.guardPos = pos

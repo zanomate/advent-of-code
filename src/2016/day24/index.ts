@@ -1,6 +1,6 @@
 import { readFile } from '../../utils/io'
 import { Grid } from '../../utils/space/Grid'
-import { Pos } from '../../utils/space/Pos'
+import { p, Pos } from '../../utils/space/Pos'
 import { DaySolution } from '../../utils/type'
 
 type CellType = '#' | '.' | string
@@ -15,7 +15,7 @@ export default async function (inputFile: string): Promise<DaySolution> {
   const lines = input.split('\n')
   const cells: CellType[][] = lines.map((line) => line.split(''))
 
-  const grid = Grid.factory(cells[0].length, cells.length, (pos) => {
+  const grid = new Grid(cells[0].length, cells.length, (pos) => {
     return {
       type: cells[pos.y][pos.x],
       distance: null,

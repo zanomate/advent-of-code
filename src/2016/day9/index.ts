@@ -1,6 +1,6 @@
 import { readFile } from '../../utils/io'
 import { Grid } from '../../utils/space/Grid'
-import { Pos } from '../../utils/space/Pos'
+import { p } from '../../utils/space/Pos'
 import { DaySolution } from '../../utils/type'
 
 function decompressV1(str: string): string {

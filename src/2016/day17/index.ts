@@ -1,7 +1,7 @@
 import md5 from 'md5'
 import { readFile } from '../../utils/io'
 import { Dir, printCharFromDir } from '../../utils/space/Dir'
-import { Pos } from '../../utils/space/Pos'
+import { p, Pos } from '../../utils/space/Pos'
 import { DaySolution } from '../../utils/type'
 
 interface Step {
@@ -29,8 +29,8 @@ export default async function (inputFile: string): Promise<DaySolution> {
   const passcode = await readFile(inputFile).then((text) => text.trim())
 
   const resolve = (): [string, number] => {
-    const startPos = new Pos(0, 0)
-    const endPos = new Pos(3, 3)
+    const startPos = p(0, 0)
+    const endPos = p(3, 3)
 
     let shortest: Step[] | null = null
     let longest: Step[] = []

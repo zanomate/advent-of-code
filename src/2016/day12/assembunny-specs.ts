@@ -8,7 +8,7 @@ export const assembunnySpecs: InstructionSpec[] = [
       if (isRegistry(dest)) {
         env.memory[dest] = isValue(src) ? Number(src) : env.memory[src]
       }
-      env.cursor++
+      env.moveCursor()
       return env
     },
   },
@@ -19,7 +19,7 @@ export const assembunnySpecs: InstructionSpec[] = [
       if (isRegistry(reg)) {
         env.memory[reg]++
       }
-      env.cursor++
+      env.moveCursor()
       return env
     },
   },
@@ -30,7 +30,7 @@ export const assembunnySpecs: InstructionSpec[] = [
       if (isRegistry(reg)) {
         env.memory[reg]--
       }
-      env.cursor++
+      env.moveCursor()
       return env
     },
   },
@@ -40,7 +40,7 @@ export const assembunnySpecs: InstructionSpec[] = [
     fn: ([cond, val], env) => {
       const condition = isValue(cond) ? Number(cond) : env.memory[cond]
       const offset = isValue(val) ? Number(val) : env.memory[val]
-      env.cursor += condition !== 0 ? offset : 1
+      env.moveCursor(condition !== 0 ? offset : 1)
       return env
     },
   },

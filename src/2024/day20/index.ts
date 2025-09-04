@@ -1,7 +1,7 @@
 import { readFile } from '../../utils/io'
 import { XY_DIRECTIONS } from '../../utils/space/Dir'
 import { Grid } from '../../utils/space/Grid'
-import { Pos } from '../../utils/space/Pos'
+import { p, Pos } from '../../utils/space/Pos'
 import { DaySolution } from '../../utils/type'
 
 enum Cell {
@@ -35,7 +35,7 @@ export default async function (inputFile: string): Promise<DaySolution> {
   let end: Pos
 
   // create grid
-  const grid = Grid.factory<Cell>(width, height, (pos) => {
+  const grid = new Grid<Cell>(width, height, (pos) => {
     const cell = cells[pos.y][pos.x]
     switch (cell) {
       case Cell.START:
@@ -73,12 +73,12 @@ export default async function (inputFile: string): Promise<DaySolution> {
     let res = 0
     for (let y = 0; y < height; y++) {
       for (let x = 0; x < width; x++) {
-        const pos = new Pos(x, y)
+        const pos = p(x, y)
         if (grid.getCell(pos) === Cell.EMPTY) {
           const time = seconds.get(pos.toString())!
           cheatShifts.forEach(([dx, dy]) => {
             const cheatDuration = Math.abs(dx) + Math.abs(dy)
-            const newPos = new Pos(x + dx, y + dy)
+            const newPos = p(x + dx, y + dy)
             if (grid.hasCell(newPos) && grid.getCell(newPos) === Cell.EMPTY) {
               const newTime = seconds.get(newPos.toString())!
               if (time - newTime - cheatDuration >= minPicosecondsSave) {

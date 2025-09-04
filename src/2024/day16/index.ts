@@ -1,7 +1,7 @@
 import { readFile } from '../../utils/io'
 import { XY_DIRECTIONS, Dir, turnBack } from '../../utils/space/Dir'
 import { Grid } from '../../utils/space/Grid'
-import { Pos } from '../../utils/space/Pos'
+import { p, Pos } from '../../utils/space/Pos'
 import { DaySolution } from '../../utils/type'
 
 type Path = Pos[]
@@ -53,7 +53,7 @@ export default async function (inputFile: string): Promise<DaySolution> {
 
   const grid = Grid.fromValues<Cell>(cells)
 
-  const startPos = new Pos(1, grid.height - 2)
+  const startPos = p(1, grid.height - 2)
   grid.getCell(startPos)!.info[Dir.RIGHT].cost = 0
 
   const queue: Pos[] = [startPos]
@@ -91,7 +91,7 @@ export default async function (inputFile: string): Promise<DaySolution> {
     })
   }
 
-  const endPos = new Pos(grid.width - 2, 1)
+  const endPos = p(grid.width - 2, 1)
   const endCell = grid.getCell(endPos)!
   const minCost = Math.min(...XY_DIRECTIONS.map((dir) => endCell.info[dir].cost))
   const minCostInfos = XY_DIRECTIONS.map((dir) => endCell.info[dir]).filter(

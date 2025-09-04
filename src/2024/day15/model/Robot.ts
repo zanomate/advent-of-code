@@ -1,5 +1,5 @@
 import { Dir } from '../../../utils/space/Dir'
-import { Pos } from '../../../utils/space/Pos'
+import { p, Pos } from '../../../utils/space/Pos'
 
 export class Robot {
   pos: Pos

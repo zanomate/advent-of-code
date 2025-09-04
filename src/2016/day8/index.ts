@@ -1,6 +1,6 @@
 import { readFile } from '../../utils/io'
 import { Grid } from '../../utils/space/Grid'
-import { Pos } from '../../utils/space/Pos'
+import { p } from '../../utils/space/Pos'
 import { DaySolution } from '../../utils/type'
 
 export default async function (inputFile: string): Promise<DaySolution> {
@@ -17,21 +17,21 @@ export default async function (inputFile: string): Promise<DaySolution> {
       // rect AxB
       const x = parseInt(match[1])
       const y = parseInt(match[2])
-      display.setPortion(new Pos(0, 0), new Pos(x, y), true)
+      display.setPortion(p(0, 0), p(x - 1, y - 1), true)
     } else if ((match = instruction.match(/rotate row y=(\d+) by (\d+)/))) {
       // rotate row y=A by B
       const row = parseInt(match[1])
       const shift = parseInt(match[2])
       const prev = display.getRow(row)
       const newRow = prev.map((_, i) => prev[(i - shift + display.width) % display.width])
-      newRow.forEach((value, i) => display.setCell(new Pos(i, row), value))
+      newRow.forEach((value, i) => display.setCell(p(i, row), value))
     } else if ((match = instruction.match(/rotate column x=(\d+) by (\d+)/))) {
       // rotate column x=A by B
       const column = parseInt(match[1])
       const shift = parseInt(match[2])
-      const prev = display.getColumn(column)
+      const prev = display.getCol(column)
       const newColumn = prev.map((_, i) => prev[(i - shift + display.height) % display.height])
-      newColumn.forEach((value, i) => display.setCell(new Pos(column, i), value))
+      newColumn.forEach((value, i) => display.setCell(p(column, i), value))
     }
   }
 

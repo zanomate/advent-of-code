@@ -1,6 +1,6 @@
 import { readFile } from '../../utils/io'
 import { Dir, turnLeft, turnRight } from '../../utils/space/Dir'
-import { Pos } from '../../utils/space/Pos'
+import { p, Pos } from '../../utils/space/Pos'
 import { DaySolution } from '../../utils/type'
 
 export default async function (inputFile: string): Promise<DaySolution> {
@@ -9,7 +9,7 @@ export default async function (inputFile: string): Promise<DaySolution> {
 
   const t0 = performance.now()
 
-  const origin = new Pos(0, 0)
+  const origin = p(0, 0)
   const path: Pos[] = [origin]
 
   let dir = Dir.UP
@@ -23,7 +23,7 @@ export default async function (inputFile: string): Promise<DaySolution> {
     dir = turn === 'L' ? turnLeft(dir) : turnRight(dir)
     const steps = parseInt(match[2])
 
-    const newPosList = lastPos.allPosToShift(dir, steps)
+    const newPosList = lastPos.stepsToShift(dir, steps)
     newPosList.forEach((newPos) => {
       if (visitedTwicePos === null && path.some((p) => p.equals(newPos))) {
         visitedTwicePos = newPos
@@ -33,8 +33,8 @@ export default async function (inputFile: string): Promise<DaySolution> {
     })
   })
 
-  const part1 = lastPos.taxicabDistance(origin)
-  const part2 = visitedTwicePos!.taxicabDistance(origin)
+  const part1 = lastPos.manhattanDistance(origin)
+  const part2 = visitedTwicePos!.manhattanDistance(origin)
 
   const t1 = performance.now()
 

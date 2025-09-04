@@ -1,8 +1,8 @@
 import { readFile } from '../../utils/io'
 import { Grid } from '../../utils/space/Grid'
-import { Pos } from '../../utils/space/Pos'
 import { DaySolution } from '../../utils/type'
 import { knotHash } from '../day10'
+import { Pos } from '../../utils/space/Pos'
 
 function hashToBits(input: string) {
   const res: boolean[] = []
@@ -26,10 +26,11 @@ export default async function (inputFile: string): Promise<DaySolution> {
   const t0 = performance.now()
 
   const grid = new Grid<boolean>(128, 128, false)
-  grid.rows.forEach((row) => {
+  for (let row = 0; row < grid.height; row++) {
     const hash = knotHash(`${input}-${row}`)
-    grid.setRow(row, hashToBits(hash))
-  })
+    const bits = hashToBits(hash)
+    grid.setRow(row, (i) => bits[i])
+  }
 
   let count = 0
   grid.positions.forEach((pos) => {

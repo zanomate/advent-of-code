@@ -35,10 +35,10 @@ export default async function (inputFile: string): Promise<DaySolution> {
         break
       default:
     }
-    maxDistance = Math.max(maxDistance, pos.distanceFrom(ORIGIN))
+    maxDistance = Math.max(maxDistance, pos.distance(ORIGIN))
   })
 
-  const part1 = pos.distanceFrom(ORIGIN)
+  const part1 = pos.distance(ORIGIN)
 
   const part2 = maxDistance
 

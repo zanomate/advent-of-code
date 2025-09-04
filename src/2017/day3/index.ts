@@ -1,6 +1,6 @@
 import { readFile } from '../../utils/io'
 import { Dir, turnLeft } from '../../utils/space/Dir'
-import { Pos } from '../../utils/space/Pos'
+import { p, Pos } from '../../utils/space/Pos'
 import { DaySolution } from '../../utils/type'
 
 export default async function (inputFile: string): Promise<DaySolution> {
@@ -25,7 +25,7 @@ export default async function (inputFile: string): Promise<DaySolution> {
   const sidePos = level ? (target - prevTotal) % (side - 1) : 0
   const part1 = level + Math.abs(sidePos - level)
 
-  let pos = new Pos(0, 0)
+  let pos = p(0, 0)
   let dir = Dir.RIGHT
 
   const map = new Map<string, number | null>()
@@ -42,7 +42,7 @@ export default async function (inputFile: string): Promise<DaySolution> {
   }
 
   const getNextPos = (pos: Pos): Pos => {
-    if (pos.x === 0 && pos.y === 0) return new Pos(1, 0)
+    if (pos.x === 0 && pos.y === 0) return p(1, 0)
     const turnDir = turnLeft(dir)
     const turnPos = pos.shift(turnDir)
     if (isPosFree(turnPos)) {

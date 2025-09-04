@@ -16,12 +16,16 @@ export default async function (inputFile: string): Promise<DaySolution> {
   memory['b'] = 0
   memory['c'] = 0
   memory['d'] = 0
+  const exec1 = computer.load(lines, memory)
+  exec1.run()
 
-  const part1: number = computer.run(lines, memory).memory['a']
+  const part1: number = exec1.memory['a']
 
   memory['c'] = 1
+  const exec2 = computer.load(lines, memory)
+  exec2.run()
 
-  const part2: number = computer.run(lines, memory).memory['a']
+  const part2: number = exec2.memory['a']
 
   const t1 = performance.now()
 

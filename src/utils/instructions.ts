@@ -14,8 +14,8 @@ export interface Instruction {
 export type Program = Instruction[]
 
 export class ExecutionEnv<Memory = BasicMemory> {
-  private readonly specs: Record<string, InstructionSpec<Memory>> = {}
-  private readonly program: Program
+  readonly specs: Record<string, InstructionSpec<Memory>> = {}
+  readonly program: Program
 
   memory: Memory
   out: string[] = []
@@ -40,10 +40,12 @@ export class ExecutionEnv<Memory = BasicMemory> {
       const spec = this.specs[instruction.name]
       spec.fn(instruction.args, this)
     }
+    return this
   }
 
   halt() {
     this._running = false
+    return this
   }
 
   get cursor() {
@@ -52,10 +54,12 @@ export class ExecutionEnv<Memory = BasicMemory> {
 
   moveCursor(lines: number = 1) {
     this._cursor += lines
+    return this
   }
 
   print(output: any) {
     this.out.push(String(output))
+    return this
   }
 }
 

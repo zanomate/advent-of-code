@@ -1,7 +1,7 @@
 import { readFile } from '../../utils/io'
 import { Dir } from '../../utils/space/Dir'
 import { Grid } from '../../utils/space/Grid'
-import { Pos } from '../../utils/space/Pos'
+import { p, Pos } from '../../utils/space/Pos'
 import { DaySolution } from '../../utils/type'
 
 interface Instruction {
@@ -25,29 +25,17 @@ export class Area {
     let count = 0
     for (let y = from.y; y < to.y; y++) {
       for (let x = from.x; x < to.x; x++) {
-        count += this.grid.getCell(new Pos(x, y))!
+        count += this.grid.getCell(p(x, y))!
       }
     }
     return count
   }
 
   countQuadrants(): number {
-    const ULQuadrant = this.count(
-      new Pos(0, 0),
-      new Pos(Math.floor(WIDTH / 2), Math.floor(HEIGHT / 2)),
-    )
-    const URQuadrant = this.count(
-      new Pos(Math.ceil(WIDTH / 2), 0),
-      new Pos(WIDTH, Math.floor(HEIGHT / 2)),
-    )
-    const DLQuadrant = this.count(
-      new Pos(0, Math.ceil(HEIGHT / 2)),
-      new Pos(Math.floor(WIDTH / 2), HEIGHT),
-    )
-    const DRQuadrant = this.count(
-      new Pos(Math.ceil(WIDTH / 2), Math.ceil(HEIGHT / 2)),
-      new Pos(WIDTH, HEIGHT),
-    )
+    const ULQuadrant = this.count(p(0, 0), p(Math.floor(WIDTH / 2), Math.floor(HEIGHT / 2)))
+    const URQuadrant = this.count(p(Math.ceil(WIDTH / 2), 0), p(WIDTH, Math.floor(HEIGHT / 2)))
+    const DLQuadrant = this.count(p(0, Math.ceil(HEIGHT / 2)), p(Math.floor(WIDTH / 2), HEIGHT))
+    const DRQuadrant = this.count(p(Math.ceil(WIDTH / 2), Math.ceil(HEIGHT / 2)), p(WIDTH, HEIGHT))
     console.log(ULQuadrant, DRQuadrant, URQuadrant, DLQuadrant)
     return ULQuadrant * DRQuadrant * URQuadrant * DLQuadrant
   }
@@ -94,7 +82,7 @@ export default async function (inputFile: string): Promise<DaySolution> {
     instructions.forEach((instruction) => {
       const endX = (((instruction.posX + instruction.velX * seconds) % WIDTH) + WIDTH) % WIDTH
       const endY = (((instruction.posY + instruction.velY * seconds) % HEIGHT) + HEIGHT) % HEIGHT
-      area.increment(new Pos(endX, endY))
+      area.increment(p(endX, endY))
     })
     return area
   }

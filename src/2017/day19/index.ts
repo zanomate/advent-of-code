@@ -1,7 +1,7 @@
 import { readFile } from '../../utils/io'
 import { DaySolution } from '../../utils/type'
 import { Grid } from '../../utils/space/Grid'
-import { Pos } from '../../utils/space/Pos'
+import { p, Pos } from '../../utils/space/Pos'
 import { Dir, turnBack, XY_DIRECTIONS } from '../../utils/space/Dir'
 
 export default async function (inputFile: string): Promise<DaySolution> {
@@ -16,7 +16,7 @@ export default async function (inputFile: string): Promise<DaySolution> {
   const t0 = performance.now()
 
   const startCol = grid.getRow(0).findIndex((cell) => cell === '|')
-  const startPos = new Pos(startCol, 0)
+  const startPos = p(startCol, 0)
 
   const getNext = (pos: Pos, dir: Dir): [Pos | null, Dir] => {
     const cell = grid.getCell(pos)

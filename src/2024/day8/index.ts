@@ -1,7 +1,7 @@
 import { readFile } from '../../utils/io'
 import { getCombinations } from '../../utils/math'
 import { Grid } from '../../utils/space/Grid'
-import { Pos } from '../../utils/space/Pos'
+import { p, Pos } from '../../utils/space/Pos'
 import { DaySolution } from '../../utils/type'
 
 export enum Cell {
@@ -36,14 +36,14 @@ export default async function (inputFile: string): Promise<DaySolution> {
 
       let i = 0
       let pos: Pos
-      while (grid.hasCell((pos = new Pos(b.x + i * dx, b.y + i * dy)))) {
+      while (grid.hasCell((pos = p(b.x + i * dx, b.y + i * dy)))) {
         if (i === 1) antinodes1.add(pos.toString())
         antinodes2.add(pos.toString())
         i++
       }
 
       i = 0
-      while (grid.hasCell((pos = new Pos(a.x - i * dx, a.y - i * dy)))) {
+      while (grid.hasCell((pos = p(a.x - i * dx, a.y - i * dy)))) {
         if (i === 1) antinodes1.add(pos.toString())
         antinodes2.add(pos.toString())
         i++
@@ -56,7 +56,7 @@ export default async function (inputFile: string): Promise<DaySolution> {
 
   antinodes1.forEach((an) => {
     const [x, y] = an.split(',').map((str) => parseInt(str))
-    grid.setCell(new Pos(x, y), Cell.ANTINODE)
+    grid.setCell(p(x, y), Cell.ANTINODE)
   })
 
   const t1 = performance.now()

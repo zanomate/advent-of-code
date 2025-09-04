@@ -1,13 +1,13 @@
 import { readFile } from '../../utils/io'
-import { Pos } from '../../utils/space/Pos'
+import { p, Pos } from '../../utils/space/Pos'
 import { DaySolution } from '../../utils/type'
 
 export default async function (inputFile: string): Promise<DaySolution> {
   const input = await readFile(inputFile).then((text) => text.trim())
   const [favoriteNumber, dest] = input.split('\n')
   const [x, y] = dest.split(',')
-  const start = new Pos(1, 1)
-  const target = new Pos(Number(x), Number(y))
+  const start = p(1, 1)
+  const target = p(Number(x), Number(y))
 
   const isWall = (pos: Pos): boolean => {
     const x = pos.x

@@ -1,5 +1,5 @@
-import { cloneDeep, isFunction } from 'lodash'
-import { Pos } from './Pos'
+import { isFunction } from 'lodash'
+import { p, Pos } from './Pos'
 
 /**
  * This is a 2D grid class.
@@ -9,40 +9,22 @@ import { Pos } from './Pos'
 export class Grid<T> {
   width: number
   height: number
-  protected cells: T[][]
+  cells: T[][]
 
-  constructor(width: number, height: number, defaultValue: T) {
+  constructor(width: number, height: number, valueOrFactory: T | ((pos: Pos) => T)) {
     this.width = width
     this.height = height
-    this.cells = Array.from({ length: height }, () =>
-      Array.from({ length: width }, () => defaultValue),
+    this.cells = Array.from({ length: height }, (_, y) =>
+      Array.from({ length: width }, (_, x) =>
+        isFunction(valueOrFactory) ? valueOrFactory(p(x, y)) : valueOrFactory,
+      ),
     )
   }
 
   static fromValues<T>(values: T[][]): Grid<T> {
-    const width = values[0].length
+    const width = values.length ? values[0].length : 0
     const height = values.length
-    // @ts-ignore
-    const grid = new Grid<T>(width, height, null)
-    values.forEach((row, y) => {
-      row.forEach((value, x) => {
-        const pos = new Pos(x, y)
-        grid.setCell(pos, value)
-      })
-    })
-    return grid
-  }
-
-  static factory<T>(width: number, height: number, f: (pos: Pos) => T): Grid<T> {
-    // @ts-ignore
-    const grid = new Grid<T>(width, height, null)
-    for (let y = 0; y < height; y++) {
-      for (let x = 0; x < width; x++) {
-        const pos = new Pos(x, y)
-        grid.setCell(pos, f(pos))
-      }
-    }
-    return grid
+    return new Grid<T>(width, height, (p) => values[p.y][p.x])
   }
 
   hasCell(pos: Pos): boolean {
@@ -54,67 +36,108 @@ export class Grid<T> {
     return null
   }
 
-  setCell(pos: Pos, valueOrUpdater: T | ((prev: T) => T)): void {
-    if (isFunction(valueOrUpdater)) {
-      this.cells[pos.y][pos.x] = valueOrUpdater(this.cells[pos.y][pos.x])
+  setCell(pos: Pos, valueOrUpdate: T | ((prev: T) => T)): void {
+    if (isFunction(valueOrUpdate)) {
+      this.cells[pos.y][pos.x] = valueOrUpdate(this.cells[pos.y][pos.x])
     } else {
-      this.cells[pos.y][pos.x] = valueOrUpdater as T
+      this.cells[pos.y][pos.x] = valueOrUpdate as T
     }
   }
 
   getRow(y: number): T[] {
+    if (y < 0 || y >= this.height) throw new Error('invalid row')
     return this.cells[y]
   }
 
-  getColumn(x: number): T[] {
+  getCol(x: number): T[] {
+    if (x < 0 || x >= this.width) throw new Error('invalid column')
     return this.cells.map((row) => row[x])
   }
 
-  setPortion(topLeft: Pos, bottomRight: Pos, valueOrUpdater: T | ((pos: Pos, prev: T) => T)): void {
+  getPortion(topLeft: Pos, bottomRight: Pos): T[][] {
+    const diff = bottomRight.diff(topLeft)
+    if (
+      topLeft.x < 0 ||
+      topLeft.y < 0 ||
+      bottomRight.x > this.width ||
+      bottomRight.y > this.height ||
+      diff.x <= 0 ||
+      diff.y <= 0
+    )
+      throw new Error('invalid portion')
+
+    const portion: T[][] = []
+    for (let y = topLeft.y; y < bottomRight.y; y++) {
+      const row = []
+      for (let x = topLeft.x; x < bottomRight.x; x++) {
+        row.push(this.cells[y][x])
+      }
+      portion.push(row)
+    }
+    return portion
+  }
+
+  setPortion(
+    topLeft: Pos,
+    bottomRight: Pos,
+    valueOrUpdate: T | ((relativePos: Pos, prev: T) => T),
+  ): void {
+    const diff = bottomRight.diff(topLeft)
+    if (
+      topLeft.x < 0 ||
+      topLeft.y < 0 ||
+      bottomRight.x > this.width ||
+      bottomRight.y > this.height ||
+      diff.x <= 0 ||
+      diff.y <= 0
+    )
+      throw new Error('invalid portion')
+
     for (let y = topLeft.y; y < bottomRight.y; y++) {
       for (let x = topLeft.x; x < bottomRight.x; x++) {
-        const pos = new Pos(x, y)
-        if (isFunction(valueOrUpdater)) this.setCell(pos, (prev) => valueOrUpdater(pos, prev))
-        else this.setCell(pos, valueOrUpdater as T)
+        const pos = p(x, y)
+        this.setCell(pos, (prev) =>
+          isFunction(valueOrUpdate) ? valueOrUpdate(pos.diff(topLeft), prev) : valueOrUpdate,
+        )
       }
     }
   }
 
-  setRow(row: number, values: T[]) {
+  setRow(row: number, valueOrUpdate: T | ((index: number, prev: T) => T)) {
     for (let x = 0; x < this.width; x++) {
-      this.setCell(new Pos(x, row), values[x] as T)
+      const pos = p(x, row)
+      this.setCell(
+        pos,
+        isFunction(valueOrUpdate) ? valueOrUpdate(x, this.getCell(pos)!) : valueOrUpdate,
+      )
     }
   }
 
-  setCol(col: number, values: T[]) {
+  setCol(col: number, valueOrUpdate: T | ((index: number, prev: T) => T)) {
     for (let y = 0; y < this.height; y++) {
-      this.setCell(new Pos(col, y), values[y] as T)
+      const pos = p(col, y)
+      this.setCell(
+        pos,
+        isFunction(valueOrUpdate) ? valueOrUpdate(y, this.getCell(pos)!) : valueOrUpdate,
+      )
     }
   }
 
   findPos(predicate: (cell: T) => boolean): Pos | null {
     for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
-        const pos = new Pos(x, y)
+        const pos = p(x, y)
         if (predicate(this.getCell(pos)!)) return pos
       }
     }
     return null
   }
 
-  get rows(): number[] {
-    return Array.from({ length: this.height }, (_, i) => i)
-  }
-
-  get cols(): number[] {
-    return Array.from({ length: this.width }, (_, i) => i)
-  }
-
   get positions(): Pos[] {
     let res: Pos[] = []
     for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
-        res.push(new Pos(x, y))
+        res.push(p(x, y))
       }
     }
     return res
@@ -131,13 +154,6 @@ export class Grid<T> {
   }
 
   clone(): Grid<T> {
-    const res = new Grid<T>(this.width, this.height, null as unknown as T)
-    for (let y = 0; y < this.height; y++) {
-      for (let x = 0; x < this.width; x++) {
-        const pos = new Pos(x, y)
-        res.setCell(pos, cloneDeep(this.getCell(pos)!))
-      }
-    }
-    return res
+    return Grid.fromValues(this.cells)
   }
 }

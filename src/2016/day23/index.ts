@@ -32,7 +32,7 @@ const computer = new Computer([
           }
         }
       }
-      env.cursor++
+      env.moveCursor()
       return env
     },
   },
@@ -44,11 +44,12 @@ export default async function (inputFile: string): Promise<DaySolution> {
 
   const t0 = performance.now()
 
-  const memory = computer.run(program, { a: 7, b: 0, c: 0, d: 0 }).memory
+  const exec = computer.load(program, { a: 7, b: 0, c: 0, d: 0 })
+  exec.run()
 
-  const part1 = memory['a']
+  const part1 = exec.memory['a']
 
-  const c = memory['a'] - factorial(7)
+  const c = exec.memory['a'] - factorial(7)
 
   const part2 = factorial(12) + c
 

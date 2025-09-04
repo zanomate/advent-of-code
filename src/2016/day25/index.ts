@@ -13,11 +13,11 @@ const computer = new Computer([
     match: /out (.+)/,
     fn: ([src], env) => {
       const value = isRegistry(src) ? env.memory[src].toString() : src
-      const lastOut = last(env.print)
+      const lastOut = last(env.out)
       if (lastOut !== undefined && lastOut === value) throw new Error()
-      env.print.push(value)
-      env.cursor++
-      if (env.print.length > THRESHOLD) env.cursor = env.program.length
+      env.print(value)
+      env.moveCursor()
+      if (env.out.length > THRESHOLD) env.halt()
       return env
     },
   },
@@ -33,7 +33,8 @@ export default async function (inputFile: string): Promise<DaySolution> {
   let found = false
   while (!found) {
     try {
-      computer.run(program, { a, b: 0, c: 0, d: 0 })
+      const exec = computer.load(program, { a, b: 0, c: 0, d: 0 })
+      exec.run()
       found = true
     } catch (error) {
       a++

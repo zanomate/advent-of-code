@@ -1,7 +1,7 @@
 import { readFile } from '../../utils/io'
 import { XY_DIRECTIONS } from '../../utils/space/Dir'
 import { Grid } from '../../utils/space/Grid'
-import { Pos } from '../../utils/space/Pos'
+import { p, Pos } from '../../utils/space/Pos'
 import { DaySolution } from '../../utils/type'
 
 enum Cell {
@@ -18,20 +18,20 @@ export default async function (inputFile: string): Promise<DaySolution> {
   const input = await readFile(inputFile).then((text) => text.trim())
   const obstacles = input.split('\n').map((row) => {
     const [x, y] = row.split(',').map((str) => parseInt(str))
-    return new Pos(x, y)
+    return p(x, y)
   })
 
   const t0 = performance.now()
 
   const getMinSteps = (startTime: number): number | null => {
     const currentObstacles = obstacles.slice(0, startTime)
-    const grid = Grid.factory<Cell>(WIDTH, HEIGHT, (pos) => {
+    const grid = new Grid<Cell>(WIDTH, HEIGHT, (pos) => {
       if (currentObstacles.some((o) => o.equals(pos))) return Cell.WALL
       return Cell.EMPTY
     })
 
-    const start = new Pos(0, 0)
-    const end = new Pos(WIDTH - 1, HEIGHT - 1)
+    const start = p(0, 0)
+    const end = p(WIDTH - 1, HEIGHT - 1)
     const queue: Pos[][] = [[start]]
     const visited = new Set<string>()
     while (queue.length) {

@@ -39,7 +39,7 @@ const specs: InstructionSpec[] = [
         env.memory[reg] = nextValue
         env.memory[RESERVED_REG] = Math.max(env.memory[RESERVED_REG] || -Infinity, nextValue)
       }
-      env.cursor++
+      env.moveCursor()
       return env
     },
   },
@@ -53,7 +53,7 @@ const specs: InstructionSpec[] = [
         env.memory[reg] = nextValue
         env.memory[RESERVED_REG] = Math.max(env.memory[RESERVED_REG] || -Infinity, nextValue)
       }
-      env.cursor++
+      env.moveCursor()
       return env
     },
   },
@@ -61,19 +61,21 @@ const specs: InstructionSpec[] = [
 
 export default async function (inputFile: string): Promise<DaySolution> {
   const input = await readFile(inputFile).then((text) => text.trim())
-  const lines = input.split('\n')
+  const program = input.split('\n')
 
   const computer = new Computer(specs)
   const memory: Record<string, number> = {}
 
   const t0 = performance.now()
 
-  const execution = computer.run(lines, memory)
-  const regs = Object.keys(execution.memory).filter((k) => k !== RESERVED_REG)
+  const exec = computer.load(program, memory)
+  exec.run()
 
-  const part1 = Math.max(...regs.map((r) => execution.memory[r]))
+  const regs = Object.keys(exec.memory).filter((k) => k !== RESERVED_REG)
 
-  const part2 = execution.memory[RESERVED_REG]
+  const part1 = Math.max(...regs.map((r) => exec.memory[r]))
+
+  const part2 = exec.memory[RESERVED_REG]
 
   const t1 = performance.now()
 

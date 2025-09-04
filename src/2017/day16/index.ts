@@ -16,21 +16,21 @@ export default async function (inputFile: string): Promise<DaySolution> {
     String.fromCharCode('a'.charCodeAt(0) + i),
   ).join('')
 
-  let execution = computer.run(program, initialMemory)
+  let exec = computer.load(program, initialMemory).run()
 
-  const part1 = execution.memory
+  const part1 = exec.memory
 
   let loopLength = 1
-  while (execution.memory !== initialMemory) {
-    execution = computer.run(program, execution.memory)
+  while (exec.memory !== initialMemory) {
+    exec = computer.load(program, exec.memory).run()
     loopLength++
   }
 
   for (let i = 0; i < 1_000_000_000 % loopLength; i++) {
-    execution = computer.run(program, execution.memory)
+    exec = computer.load(program, exec.memory).run()
   }
 
-  const part2 = execution.memory
+  const part2 = exec.memory
 
   const t1 = performance.now()
 

@@ -34,14 +34,14 @@ export class HexPos {
     }
   }
 
-  toString(): string {
-    return `${this.x},${this.y},${this.z}`
-  }
-
-  distanceFrom(pos: HexPos): number {
+  distance(pos: HexPos): number {
     const x = Math.abs(this.x - pos.x)
     const y = Math.abs(this.y - pos.y)
     const z = Math.abs(this.z - pos.z)
     return (x + y + z) / 2
+  }
+
+  toString(): string {
+    return `${this.x},${this.y},${this.z}`
   }
 }
