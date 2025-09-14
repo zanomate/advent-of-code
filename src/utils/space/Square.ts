@@ -29,6 +29,18 @@ export class Square<T> extends Grid<T> {
     return rotated
   }
 
+  flipX() {
+    const rotated = new Square(this.size, null as unknown as T)
+
+    for (let j = 0; j < this.size; j++) {
+      for (let i = 0; i < this.size; i++) {
+        rotated.setCell(p(this.size - 1 - i, j), this.getCell(p(i, j))!)
+      }
+    }
+
+    return rotated
+  }
+
   split(unitSize: number): Square<T>[][] {
     const rows = this.size / unitSize
     if (rows % 1) throw new Error('invalid unit size')

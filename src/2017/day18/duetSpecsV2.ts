@@ -1,4 +1,4 @@
-import { BasicMemory, getParameterValue, InstructionSpec } from '../../utils/instructions'
+import { BasicMemory, getParameterValue, InstructionSpec } from '../../utils/computer/instructions'
 
 export type DuetMemory = BasicMemory & {
   p: number

@@ -1,4 +1,4 @@
-import { InstructionSpec } from '../../utils/instructions'
+import { InstructionSpec } from '../../utils/computer/instructions'
 
 function rotateChars(str: string, n: number) {
   let len = str.length

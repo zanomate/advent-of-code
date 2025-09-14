@@ -1,4 +1,4 @@
-import { Computer } from '../../utils/instructions'
+import { Computer } from '../../utils/computer/instructions'
 import { readFile } from '../../utils/io'
 import { DaySolution } from '../../utils/type'
 import { specs } from './specs'

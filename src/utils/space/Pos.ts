@@ -100,6 +100,14 @@ export class Pos {
   toString(): string {
     return `${this.x},${this.y}`
   }
+
+  static fromString(str: string): Pos {
+    const match = str.match(/([+-]?\d+),([+-]?\d+)/)
+    if (!match) throw new Error(`invalid string ${str}`)
+    const x = parseInt(match[1], 10)
+    const y = parseInt(match[2], 10)
+    return new Pos(x, y)
+  }
 }
 
 export const p = (x: number, y: number) => new Pos(x, y)

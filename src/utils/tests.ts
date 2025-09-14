@@ -1,14 +1,15 @@
-import { resolveDay } from '../index'
+import { Parameter, resolveDay } from '../index'
 import { PartSolution } from './type'
 
 export const testDay = async (
   year: number,
   day: number,
   inputFile: string,
+  parameters: Parameter[],
   part1: PartSolution | null,
   part2: PartSolution | null,
 ) => {
-  const solution = await resolveDay(year, day, inputFile)
+  const solution = await resolveDay(year, day, inputFile, parameters)
   if (part1 !== null) {
     expect(solution[0]).toEqual(part1)
   }

@@ -1,5 +1,5 @@
 import { last } from 'lodash'
-import { Computer, isRegistry } from '../../utils/instructions'
+import { Computer, isRegistry } from '../../utils/computer/instructions'
 import { readFile } from '../../utils/io'
 import { DaySolution } from '../../utils/type'
 import { assembunnySpecs } from '../day12/assembunny-specs'

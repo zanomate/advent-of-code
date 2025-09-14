@@ -1,4 +1,4 @@
-import { getParameterValue, InstructionSpec } from '../../utils/instructions'
+import { getParameterValue, InstructionSpec } from '../../utils/computer/instructions'
 
 export const duetSpecsV1: InstructionSpec[] = [
   {

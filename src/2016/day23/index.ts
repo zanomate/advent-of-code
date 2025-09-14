@@ -1,4 +1,4 @@
-import { Computer, isRegistry } from '../../utils/instructions'
+import { Computer, isRegistry } from '../../utils/computer/instructions'
 import { readFile } from '../../utils/io'
 import { factorial } from '../../utils/math'
 import { DaySolution } from '../../utils/type'

@@ -1,4 +1,4 @@
-import { Computer, ExecutionEnv, InstructionSpec } from '../../utils/instructions'
+import { Computer, ExecutionEnv, InstructionSpec } from '../../utils/computer/instructions'
 import { readFile } from '../../utils/io'
 import { DaySolution } from '../../utils/type'
 

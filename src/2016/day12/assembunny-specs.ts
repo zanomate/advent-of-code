@@ -1,4 +1,4 @@
-import { InstructionSpec, isRegistry, isValue } from '../../utils/instructions'
+import { InstructionSpec, isRegistry, isValue } from '../../utils/computer/instructions'
 
 export const assembunnySpecs: InstructionSpec[] = [
   {
