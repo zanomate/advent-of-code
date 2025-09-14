@@ -15,7 +15,7 @@ export function readStringParameter(name: string, parameter: string | undefined)
 
 export function readNumericParameter(name: string, parameter: string | undefined) {
   const asString = readStringParameter(name, parameter)
-  const asNumber = Number(parameter)
+  const asNumber = Number(asString)
   if (isNaN(asNumber))
     throw new Error(`Expected parameter <${name}> to be a number. Found "${parameter}".`)
   return asNumber

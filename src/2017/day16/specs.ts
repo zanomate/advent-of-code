@@ -20,7 +20,7 @@ export const specs: InstructionSpec<string>[] = [
     match: /s(.+)/,
     fn: ([num], env) => {
       env.memory = rotateChars(env.memory, Number(num))
-      env.cursor++
+      env.moveCursor()
       return env
     },
   },
@@ -31,7 +31,7 @@ export const specs: InstructionSpec<string>[] = [
       const index1 = Number(num1)
       const index2 = Number(num2)
       env.memory = swapChars(env.memory, index1, index2)
-      env.cursor++
+      env.moveCursor()
       return env
     },
   },
@@ -42,7 +42,7 @@ export const specs: InstructionSpec<string>[] = [
       const index1 = env.memory.indexOf(name1)
       const index2 = env.memory.indexOf(name2)
       env.memory = swapChars(env.memory, index1, index2)
-      env.cursor++
+      env.moveCursor()
       return env
     },
   },
