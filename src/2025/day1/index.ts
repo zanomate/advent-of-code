@@ -61,7 +61,7 @@ export default async function (inputFile: string): Promise<DaySolution> {
 
   const t0 = performance.now()
 
-  let part1 = null //  resolvePart1(rotations)
+  let part1 = resolvePart1(rotations)
   let part2 = resolvePart2(rotations)
 
   const t1 = performance.now()
