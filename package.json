@@ -1,5 +1,5 @@
 {
-  "name": "advent15",
+  "name": "advent-of-code",
   "version": "1.0.0",
   "scripts": {
     "resolve": "tsx -e \"import('src/index.ts').then(m => m.default.resolve(process.argv.slice(1)))\"",
