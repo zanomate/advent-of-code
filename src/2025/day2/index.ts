@@ -1,10 +1,6 @@
 import { readFile } from '../../utils/io'
 import { DaySolution } from '../../utils/type'
-
-interface Range {
-  start: number
-  end: number
-}
+import { Range } from '../../utils/number'
 
 function isInvalid(num: number): boolean {
   const asString = String(num)
