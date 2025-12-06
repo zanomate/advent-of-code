@@ -21,11 +21,11 @@ describe('2025', () => {
     await testDay(2025, 5, 'sample', [], 3, 782)
     await testDay(2025, 5, 'input', [], 14, 353863745078671)
   })
-  // xit(`Day 6`, async () => {
-  //   await testDay(2025, 6, 'sample', [], null, null)
-  //   await testDay(2025, 6, 'input', [], null, null)
-  // })
-  // xit(`Day 7`, async () => {
+  it(`Day 6`, async () => {
+    await testDay(2025, 6, 'sample', [], 4277556, 3263827)
+    await testDay(2025, 6, 'input', [], 5595593539811, 10153315705125)
+  })
+  // it(`Day 7`, async () => {
   //   await testDay(2025, 7, 'sample', [], null, null)
   //   await testDay(2025, 7, 'input', [], null, null)
   // })
@@ -69,7 +69,7 @@ describe('2025', () => {
   //   await testDay(2025, 17, 'sample', [], null, null)
   //   await testDay(2025, 17, 'input', [], null, null)
   // })
-  // xit(`Day 18`, async () => {
+  // it(`Day 18`, async () => {
   //   await testDay(2025, 18, 'sample', [], null, null)
   //   await testDay(2025, 18, 'input', [], null, null)
   // })
