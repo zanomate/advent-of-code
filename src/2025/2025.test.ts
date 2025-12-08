@@ -29,10 +29,10 @@ describe('2025', () => {
     await testDay(2025, 7, 'sample', [], 21, 40)
     await testDay(2025, 7, 'input', [], 1649, 16937871060075)
   })
-  // it(`Day 8`, async () => {
-  //   await testDay(2025, 8, 'sample', [], null, null)
-  //   await testDay(2025, 8, 'input', [], null, null)
-  // })
+  it(`Day 8`, async () => {
+    await testDay(2025, 8, 'sample', [10], 40, 25272)
+    await testDay(2025, 8, 'input', [1000], 115885, 274150525)
+  })
   // it(`Day 9`, async () => {
   //   await testDay(2025, 9, 'sample', [], null, null)
   //   await testDay(2025, 9, 'input', [], null, null)
