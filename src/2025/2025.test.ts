@@ -37,10 +37,10 @@ describe('2025', () => {
     await testDay(2025, 9, 'sample', [], 50, 24)
     await testDay(2025, 9, 'input', [], 4777816465, 1410501884)
   })
-  // it(`Day 10`, async () => {
-  //   await testDay(2025, 10, 'sample', [], null, null)
-  //   await testDay(2025, 10, 'input', [], null, null)
-  // })
+  it(`Day 10`, async () => {
+    await testDay(2025, 10, 'sample', [], 7, 33)
+    // await testDay(2025, 10, 'input', [], 524, 21696) It takes 7+ minutes
+  })
   // it(`Day 11`, async () => {
   //   await testDay(2025, 11, 'sample', [], null, null)
   //   await testDay(2025, 11, 'input', [], null, null)
