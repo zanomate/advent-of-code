@@ -41,64 +41,13 @@ describe('2025', () => {
     await testDay(2025, 10, 'sample', [], 7, 33)
     // await testDay(2025, 10, 'input', [], 524, 21696) It takes 7+ minutes
   })
-  // it(`Day 11`, async () => {
-  //   await testDay(2025, 11, 'sample', [], null, null)
-  //   await testDay(2025, 11, 'input', [], null, null)
-  // })
+  it(`Day 11`, async () => {
+    await testDay(2025, 11, 'sample', [], 5, 0)
+    await testDay(2025, 11, 'sample2', [], 0, 2)
+    await testDay(2025, 11, 'input', [], 428, 331468292364745)
+  })
   // it(`Day 12`, async () => {
   //   await testDay(2025, 12, 'sample', [], null, null)
   //   await testDay(2025, 12, 'input', [], null, null)
-  // })
-  // it(`Day 13`, async () => {
-  //   await testDay(2025, 13, 'sample', [], null, null)
-  //   await testDay(2025, 13, 'input', [], null, null)
-  // })
-  // fit(`Day 14`, async () => {
-  //   await testDay(2025, 14, 'sample', [], null, null)
-  //   await testDay(2025, 14, 'input', [], null, null)
-  // })
-  // it(`Day 15`, async () => {
-  //   await testDay(2025, 15, 'sample', [], null, null)
-  //   await testDay(2025, 15, 'input', [], null, null)
-  // })
-  // it(`Day 16`, async () => {
-  //   await testDay(2025, 16, 'sample', [], null, null)
-  //   await testDay(2025, 16, 'input', [], null, null)
-  // })
-  // it(`Day 17`, async () => {
-  //   await testDay(2025, 17, 'sample', [], null, null)
-  //   await testDay(2025, 17, 'input', [], null, null)
-  // })
-  // it(`Day 18`, async () => {
-  //   await testDay(2025, 18, 'sample', [], null, null)
-  //   await testDay(2025, 18, 'input', [], null, null)
-  // })
-  // it(`Day 19`, async () => {
-  //   await testDay(2025, 19, 'sample', [], null, null)
-  //   await testDay(2025, 19, 'input', [], null, null)
-  // })
-  // it(`Day 20`, async () => {
-  //   await testDay(2025, 20, 'sample', [], null, null)
-  //   await testDay(2025, 20, 'input', [], null, null)
-  // })
-  // it(`Day 21`, async () => {
-  //   await testDay(2025, 21, 'sample', [], null, null)
-  //   await testDay(2025, 21, 'input', [], null, null)
-  // })
-  // it(`Day 22`, async () => {
-  //   await testDay(2025, 22, 'sample', [], null, null)
-  //   await testDay(2025, 22, 'input', [], null, null)
-  // })
-  // it(`Day 23`, async () => {
-  //   await testDay(2025, 23, 'sample', [], null, null)
-  //   await testDay(2025, 23, 'input', [], null, null)
-  // })
-  // it(`Day 24`, async () => {
-  //   await testDay(2025, 24, 'sample', [], null, null)
-  //   await testDay(2025, 24, 'input', [], null, null)
-  // })
-  // it(`Day 25`, async () => {
-  //   await testDay(2025, 25, 'sample', [], null, null)
-  //   await testDay(2025, 25, 'input', [], null, null)
   // })
 })
