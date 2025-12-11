@@ -103,7 +103,6 @@ const configureJoltage = (machine: Machine) => {
             (b) => b.switches.includes(i) && !b.switches.includes(j),
           )
           if (usefulButtons.length === 0) {
-            // console.info("impossible imbalance");
             return
           }
           if (usefulButtons.length === 1) {
@@ -130,9 +129,8 @@ const configureJoltage = (machine: Machine) => {
   return best
 }
 
-async function resolvePart2(machines: Machine[]) {
+function resolvePart2(machines: Machine[]) {
   const solutions = machines.map((machine) => {
-    console.log(machine.index)
     return configureJoltage(machine)
   })
 
@@ -171,7 +169,7 @@ export default async function (inputFile: string): Promise<DaySolution> {
   const t0 = performance.now()
 
   let part1 = resolvePart1(machines)
-  let part2 = await resolvePart2(machines)
+  let part2 = resolvePart2(machines)
 
   const t1 = performance.now()
 
