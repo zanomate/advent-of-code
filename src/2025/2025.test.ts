@@ -39,15 +39,15 @@ describe('2025', () => {
   })
   it(`Day 10`, async () => {
     await testDay(2025, 10, 'sample', [], 7, 33)
-    // await testDay(2025, 10, 'input', [], 524, 21696) It takes 7+ minutes
+    // await testDay(2025, 10, 'input', [], 524, 21696) // It takes 7+ minutes
   })
   it(`Day 11`, async () => {
     await testDay(2025, 11, 'sample', [], 5, 0)
     await testDay(2025, 11, 'sample2', [], 0, 2)
     await testDay(2025, 11, 'input', [], 428, 331468292364745)
   })
-  // it(`Day 12`, async () => {
-  //   await testDay(2025, 12, 'sample', [], null, null)
-  //   await testDay(2025, 12, 'input', [], null, null)
-  // })
+  it(`Day 12`, async () => {
+    // await testDay(2025, 12, 'sample', [], 2, null) // sample can't be resolved by current algorithm
+    await testDay(2025, 12, 'input', [], 472, null)
+  })
 })
