@@ -1,5 +1,6 @@
 import { isFunction } from 'lodash'
 import { p, Pos } from './Pos'
+import { flipMatrixX, flipMatrixY, rotateMatrixClockwise } from '../matrix'
 
 /**
  * This is a 2D grid class.
@@ -155,5 +156,17 @@ export class Grid<Cell> {
 
   clone(): Grid<Cell> {
     return Grid.fromValues(this.cells)
+  }
+
+  rotate(): Grid<Cell> {
+    return Grid.fromValues<Cell>(rotateMatrixClockwise(this.cells))
+  }
+
+  flipX(): Grid<Cell> {
+    return Grid.fromValues<Cell>(flipMatrixX(this.cells))
+  }
+
+  flipY(): Grid<Cell> {
+    return Grid.fromValues<Cell>(flipMatrixY(this.cells))
   }
 }
