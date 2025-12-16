@@ -14,7 +14,7 @@ Solution for [adventofcode.com](https://adventofcode.com)
 | 2022 |        |
 | 2023 |        |
 | 2024 | ✅     |
-| 2025 | 🚀     |
+| 2025 | ✅     |
 
 ### Commands
 
