@@ -50,7 +50,7 @@ function resolvePart2(tree: TreeNode): number {
   return valueOf(tree)
 }
 
-export default async function (inputFile: string, parameters: string[]): Promise<DaySolution> {
+export default async function (inputFile: string): Promise<DaySolution> {
   const input = await readFile(inputFile).then((text) => text.trim())
   const numbers = input.split(' ').map(Number)
   const tree = parseTree(0, numbers)
