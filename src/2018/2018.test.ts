@@ -34,4 +34,7 @@ describe('2018', () => {
     await testDay(2018, 9, 'sample', [], 32, null)
     await testDay(2018, 9, 'sample2', [], 146373, null)
   })
+  it(`Day 10`, async () => {
+    await testDay(2018, 10, 'sample', [], null, 3)
+  })
 })
