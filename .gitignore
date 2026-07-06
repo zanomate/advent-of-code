@@ -8,3 +8,6 @@
 
 # production
 /dist
+
+# claude
+/.claude/settings.local.json
