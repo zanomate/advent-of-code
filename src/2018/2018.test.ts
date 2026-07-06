@@ -31,13 +31,20 @@ describe('2018', () => {
     await testDay(2018, 7, 'input', [60, 5], 'LFMNJRTQVZCHIABKPXYEUGWDSO', 1180)
   })
   it(`Day 9`, async () => {
-    await testDay(2018, 9, 'sample', [], 32, null)
-    await testDay(2018, 9, 'sample2', [], 146373, null)
+    await testDay(2018, 9, 'sample', [], 32, 22563)
+    await testDay(2018, 9, 'sample2', [], 146373, 1406506154)
+    await testDay(2018, 9, 'input', [], 424639, 3516007333)
   })
   it(`Day 10`, async () => {
     await testDay(2018, 10, 'sample', [], null, 3)
+    await testDay(2018, 10, 'input', [], null, 10813)
   })
   it(`Day 11`, async () => {
     await testDay(2018, 11, 'sample', [], '33,45', '90,269,16')
+    await testDay(2018, 11, 'sample', [], '235,87', '234,272,18')
+  })
+  it(`Day 12`, async () => {
+    await testDay(2018, 12, 'sample', [], 325, 999999999374)
+    await testDay(2018, 12, 'input', [], 2571, 3100000000655)
   })
 })
