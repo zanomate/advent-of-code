@@ -67,5 +67,26 @@ describe('2018', () => {
   })
   it(`Day 16`, async () => {
     await testDay(2018, 16, 'sample', [], 1, null)
+    await testDay(2018, 16, 'input', [], 542, 575)
+  })
+  it(`Day 17`, async () => {
+    await testDay(2018, 17, 'sample', [], 57, 29)
+    await testDay(2018, 17, 'input', [], 40879, 34693)
+  })
+  it(`Day 18`, async () => {
+    await testDay(2018, 18, 'sample', [], 1147, null)
+    await testDay(2018, 18, 'input', [], 745008, 219425)
+  })
+  it(`Day 19`, async () => {
+    await testDay(2018, 19, 'sample', [], 6, null)
+    await testDay(2018, 19, 'input', [], 1500, 18869760)
+  })
+  it(`Day 20`, async () => {
+    await testDay(2018, 20, 'sample', [], 3, null)
+    await testDay(2018, 20, 'sample2', [], 10, null)
+    await testDay(2018, 20, 'sample3', [], 18, null)
+    await testDay(2018, 20, 'sample4', [], 23, null)
+    await testDay(2018, 20, 'sample5', [], 31, null)
+    await testDay(2018, 20, 'input', [], 3958, 8566)
   })
 })
