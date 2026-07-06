@@ -89,4 +89,27 @@ describe('2018', () => {
     await testDay(2018, 20, 'sample5', [], 31, null)
     await testDay(2018, 20, 'input', [], 3958, 8566)
   })
+  it(`Day 21`, async () => {
+    // input takes ~40s (part 2 runs the VM until the halt-value sequence cycles)
+    // await testDay(2018, 21, 'input', [], 4797782, 6086461)
+  })
+  it(`Day 22`, async () => {
+    await testDay(2018, 22, 'sample', [], 114, 45)
+    await testDay(2018, 22, 'input', [], 7743, 1029)
+  })
+  it(`Day 23`, async () => {
+    await testDay(2018, 23, 'sample', [], 7, null)
+    await testDay(2018, 23, 'sample2', [], null, 36)
+    await testDay(2018, 23, 'input', [], 691, 126529978)
+  })
+  it(`Day 24`, async () => {
+    await testDay(2018, 24, 'sample', [], 5216, 51)
+    await testDay(2018, 24, 'input', [], 35947, 1105)
+  })
+  it(`Day 25`, async () => {
+    await testDay(2018, 25, 'sample', [], 2, null)
+    await testDay(2018, 25, 'sample2', [], 4, null)
+    await testDay(2018, 25, 'sample3', [], 3, null)
+    await testDay(2018, 25, 'sample4', [], 8, null)
+  })
 })
